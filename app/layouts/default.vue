@@ -48,7 +48,7 @@
     <UFooter>
       <template #left>
         <p class="text-sm text-gray-500">
-          © {{ new Date().getFullYear() }} Reneo.id - Wedding & Photography
+          © {{ new Date().getFullYear() }} Reneo.id - Wedding Organizer
         </p>
       </template>
       
