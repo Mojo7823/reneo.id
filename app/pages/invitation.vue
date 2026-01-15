@@ -8,7 +8,7 @@ definePageMeta({
   <UContainer class="py-12">
     <div class="text-center mb-12">
       <h1 class="text-4xl font-bold mb-4">Digital Wedding Invitations</h1>
-      <p class="text-xl text-gray-600">Create beautiful online invitations for your special day</p>
+      <p class="text-xl text-muted">Create beautiful online invitations for your special day</p>
     </div>
 
     <UCard>
