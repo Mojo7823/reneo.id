@@ -1,40 +1,34 @@
 <template>
   <div>
-    <UHeader>
-      <template #logo>
-        <NuxtLink to="/" class="text-2xl font-bold">
-          Reneo.id
-        </NuxtLink>
-      </template>
-      
+    <UHeader title="Reneo.id" to="/">
       <template #right>
         <UButton
           to="/"
-          color="gray"
+          color="neutral"
           variant="ghost"
           label="Home"
         />
         <UButton
           to="/portfolio"
-          color="gray"
+          color="neutral"
           variant="ghost"
           label="Portfolio"
         />
         <UButton
           to="/services"
-          color="gray"
+          color="neutral"
           variant="ghost"
           label="Services"
         />
         <UButton
           to="/invitation"
-          color="gray"
+          color="neutral"
           variant="ghost"
           label="Invitation"
         />
         <UButton
           to="/contact"
-          color="gray"
+          color="neutral"
           variant="ghost"
           label="Contact"
         />
@@ -47,7 +41,7 @@
 
     <UFooter>
       <template #left>
-        <p class="text-sm text-gray-500">
+        <p class="text-sm text-muted">
           © {{ new Date().getFullYear() }} Reneo.id - Wedding Organizer
         </p>
       </template>
@@ -55,14 +49,14 @@
       <template #right>
         <UButton
           icon="i-simple-icons-instagram"
-          color="gray"
+          color="neutral"
           variant="ghost"
           to="https://instagram.com"
           target="_blank"
         />
         <UButton
           icon="i-simple-icons-facebook"
-          color="gray"
+          color="neutral"
           variant="ghost"
           to="https://facebook.com"
           target="_blank"

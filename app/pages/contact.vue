@@ -14,23 +14,23 @@ const form = reactive({
   <UContainer class="py-12">
     <div class="text-center mb-12">
       <h1 class="text-4xl font-bold mb-4">Contact Us</h1>
-      <p class="text-xl text-gray-600">Get in touch for your wedding or photography needs</p>
+      <p class="text-xl text-muted">Get in touch for your wedding or photography needs</p>
     </div>
 
     <div class="max-w-2xl mx-auto">
       <UCard>
         <form class="space-y-4">
-          <UFormGroup label="Name" name="name">
+          <UFormField label="Name" name="name">
             <UInput v-model="form.name" placeholder="Your name" />
-          </UFormGroup>
+          </UFormField>
 
-          <UFormGroup label="Email" name="email">
+          <UFormField label="Email" name="email">
             <UInput v-model="form.email" type="email" placeholder="your@email.com" />
-          </UFormGroup>
+          </UFormField>
 
-          <UFormGroup label="Message" name="message">
-            <UTextarea v-model="form.message" placeholder="Tell us about your project..." rows="5" />
-          </UFormGroup>
+          <UFormField label="Message" name="message">
+            <UTextarea v-model="form.message" placeholder="Tell us about your project..." :rows="5" />
+          </UFormField>
 
           <UButton type="submit" color="primary" block>
             Send Message

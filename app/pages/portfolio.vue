@@ -157,7 +157,7 @@ const filteredItems = computed(() => {
             v-for="category in categories"
             :key="category"
             :variant="activeCategory === category ? 'solid' : 'ghost'"
-            :color="activeCategory === category ? 'primary' : 'gray'"
+            :color="activeCategory === category ? 'primary' : 'neutral'"
             @click="activeCategory = category"
           >
             {{ category }}

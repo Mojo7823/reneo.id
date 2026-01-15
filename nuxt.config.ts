@@ -9,6 +9,9 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   compatibilityDate: '2024-04-03',
   
+  // Import Tailwind CSS and Nuxt UI styles
+  css: ['~/assets/css/main.css'],
+  
   // Nuxt UI v4 configuration
   ui: {
     // Configure UI settings here
