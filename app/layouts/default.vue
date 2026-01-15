@@ -15,10 +15,10 @@
           label="Home"
         />
         <UButton
-          to="/portfolio"
+          to="/about"
           color="gray"
           variant="ghost"
-          label="Portfolio"
+          label="About"
         />
         <UButton
           to="/services"
@@ -27,10 +27,10 @@
           label="Services"
         />
         <UButton
-          to="/invitation"
+          to="/portfolio"
           color="gray"
           variant="ghost"
-          label="Invitation"
+          label="Portfolio"
         />
         <UButton
           to="/contact"
@@ -48,7 +48,7 @@
     <UFooter>
       <template #left>
         <p class="text-sm text-gray-500">
-          © {{ new Date().getFullYear() }} Reneo.id - Wedding & Photography
+          © {{ new Date().getFullYear() }} Reneo Wedding Organizer - Creating Unforgettable Moments
         </p>
       </template>
       

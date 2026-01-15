@@ -19,14 +19,14 @@ export default defineNuxtConfig({
     preference: 'light', // Default to light mode for photography
   },
   
-  // App metadata for wedding/photography project
+  // App metadata for wedding organizer project
   app: {
     head: {
-      title: 'Reneo.id - Wedding & Photography',
+      title: 'Reneo Wedding Organizer - Creating Unforgettable Moments',
       meta: [
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-        { name: 'description', content: 'Professional wedding photography and digital invitation services' },
+        { name: 'description', content: 'Professional wedding organizer services - Full wedding planning, venue decoration, photography, and more. Creating unforgettable moments for your special day.' },
       ],
       link: [
         { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
