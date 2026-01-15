@@ -19,14 +19,21 @@ export default defineNuxtConfig({
     preference: 'light', // Default to light mode for photography
   },
   
+  // Router configuration for smooth scrolling
+  router: {
+    options: {
+      scrollBehaviorType: 'smooth',
+    },
+  },
+  
   // App metadata for wedding/photography project
   app: {
     head: {
-      title: 'Reneo.id - Wedding & Photography',
+      title: 'Reneo.id - Wedding Organizer',
       meta: [
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-        { name: 'description', content: 'Professional wedding photography and digital invitation services' },
+        { name: 'description', content: 'Professional wedding organizer and photography services. Creating magical moments and unforgettable celebrations.' },
       ],
       link: [
         { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }

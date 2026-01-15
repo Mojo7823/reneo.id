@@ -153,7 +153,7 @@ const testimonials = [
           Creating magical moments and unforgettable celebrations. Let us turn your wedding dreams into a beautiful reality.
         </p>
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
-          <UButton to="#portfolio" size="xl" color="white" variant="solid">
+          <UButton href="#portfolio" size="xl" color="white" variant="solid">
             View Our Work
           </UButton>
           <UButton to="/contact" size="xl" variant="outline" color="white">
@@ -184,10 +184,10 @@ const testimonials = [
               Our team of passionate wedding professionals brings together creativity, expertise, and meticulous attention to detail to ensure your special day is nothing short of perfect. From intimate gatherings to grand celebrations, we handle every aspect with care and dedication.
             </p>
             <div class="flex gap-4">
-              <UButton to="#services" color="primary" size="lg">
+              <UButton href="#services" color="primary" size="lg">
                 Our Services
               </UButton>
-              <UButton to="#team" variant="outline" color="gray" size="lg">
+              <UButton href="#team" variant="outline" color="gray" size="lg">
                 Meet Our Team
               </UButton>
             </div>
