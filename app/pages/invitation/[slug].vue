@@ -13,6 +13,7 @@ const themes = {
     overlay: 'bg-black/50',
     textColor: 'text-white',
     accentColor: 'text-amber-300',
+    accentBgColor: 'bg-amber-300',
     fontFamily: 'font-serif',
   },
   romantic: {
@@ -21,6 +22,7 @@ const themes = {
     overlay: 'bg-rose-900/40',
     textColor: 'text-white',
     accentColor: 'text-rose-200',
+    accentBgColor: 'bg-rose-200',
     fontFamily: 'font-serif',
   },
   garden: {
@@ -29,6 +31,7 @@ const themes = {
     overlay: 'bg-emerald-900/40',
     textColor: 'text-white',
     accentColor: 'text-emerald-200',
+    accentBgColor: 'bg-emerald-200',
     fontFamily: 'font-serif',
   },
   beach: {
@@ -37,6 +40,7 @@ const themes = {
     overlay: 'bg-sky-900/30',
     textColor: 'text-white',
     accentColor: 'text-sky-200',
+    accentBgColor: 'bg-sky-200',
     fontFamily: 'font-serif',
   },
   rustic: {
@@ -45,6 +49,7 @@ const themes = {
     overlay: 'bg-amber-900/40',
     textColor: 'text-white',
     accentColor: 'text-amber-200',
+    accentBgColor: 'bg-amber-200',
     fontFamily: 'font-serif',
   },
   modern: {
@@ -53,6 +58,7 @@ const themes = {
     overlay: 'bg-slate-900/50',
     textColor: 'text-white',
     accentColor: 'text-slate-200',
+    accentBgColor: 'bg-slate-200',
     fontFamily: 'font-sans',
   },
 }
@@ -182,9 +188,9 @@ useHead({
 
         <!-- Decorative Divider -->
         <div class="flex items-center justify-center space-x-4">
-          <div :class="['w-16 md:w-24 h-px', currentTheme.accentColor.replace('text-', 'bg-')]"></div>
+          <div :class="['w-16 md:w-24 h-px', currentTheme.accentBgColor]"></div>
           <UIcon name="i-heroicons-heart-solid" :class="['w-5 h-5', currentTheme.accentColor]" />
-          <div :class="['w-16 md:w-24 h-px', currentTheme.accentColor.replace('text-', 'bg-')]"></div>
+          <div :class="['w-16 md:w-24 h-px', currentTheme.accentBgColor]"></div>
         </div>
 
         <!-- Personal Message -->
@@ -237,9 +243,9 @@ useHead({
             We look forward to celebrating with you!
           </p>
           <div class="flex items-center justify-center space-x-4">
-            <div :class="['w-8 md:w-12 h-px', currentTheme.accentColor.replace('text-', 'bg-')]"></div>
+            <div :class="['w-8 md:w-12 h-px', currentTheme.accentBgColor]"></div>
             <UIcon name="i-heroicons-heart" :class="['w-4 h-4', currentTheme.accentColor]" />
-            <div :class="['w-8 md:w-12 h-px', currentTheme.accentColor.replace('text-', 'bg-')]"></div>
+            <div :class="['w-8 md:w-12 h-px', currentTheme.accentBgColor]"></div>
           </div>
         </div>
 
