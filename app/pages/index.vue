@@ -5,70 +5,70 @@ definePageMeta({
 
 // Company statistics
 const stats = [
-  { label: 'Weddings Organized', value: '500+' },
-  { label: 'Happy Couples', value: '500+' },
-  { label: 'Years Experience', value: '10+' },
-  { label: 'Team Members', value: '25+' },
+  { label: 'Pernikahan Diselenggarakan', value: '500+' },
+  { label: 'Pasangan Bahagia', value: '500+' },
+  { label: 'Tahun Pengalaman', value: '10+' },
+  { label: 'Anggota Tim', value: '25+' },
 ]
 
 // Team members
 const team = [
   {
     name: 'Sarah Anderson',
-    role: 'Founder & Lead Planner',
-    image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop&crop=face',
-    description: 'With over 15 years of experience in the wedding industry, Sarah brings creativity and passion to every celebration.',
+    role: 'Pendiri & Perencana Utama',
+    image: 'https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop',
+    description: 'Dengan pengalaman lebih dari 15 tahun di industri pernikahan, Sarah membawa kreativitas dan passion ke setiap perayaan.',
   },
   {
     name: 'Michael Chen',
-    role: 'Creative Director',
-    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face',
-    description: 'Michael transforms wedding visions into stunning realities with his eye for design and attention to detail.',
+    role: 'Direktur Kreatif',
+    image: 'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop',
+    description: 'Michael mengubah visi pernikahan menjadi kenyataan menakjubkan dengan mata desain dan perhatian terhadap detail.',
   },
   {
     name: 'Emily Rodriguez',
-    role: 'Event Coordinator',
-    image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop&crop=face',
-    description: 'Emily ensures every wedding runs smoothly from start to finish with her exceptional organizational skills.',
+    role: 'Koordinator Acara',
+    image: 'https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop',
+    description: 'Emily memastikan setiap pernikahan berjalan lancar dari awal hingga akhir dengan kemampuan organisasi yang luar biasa.',
   },
   {
     name: 'David Kim',
-    role: 'Photography Director',
-    image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face',
-    description: 'David captures timeless moments with artistic excellence, preserving memories that last a lifetime.',
+    role: 'Direktur Fotografi',
+    image: 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop',
+    description: 'David mengabadikan momen tak terlupakan dengan keunggulan artistik, menyimpan kenangan yang abadi seumur hidup.',
   },
 ]
 
 // Services offered
 const services = [
   {
-    title: 'Full Wedding Planning',
-    description: 'From concept to celebration, we handle every detail of your dream wedding. Our comprehensive planning ensures a stress-free experience.',
+    title: 'Perencanaan Pernikahan Lengkap',
+    description: 'Dari konsep hingga perayaan, kami menangani setiap detail pernikahan impian Anda. Perencanaan komprehensif kami memastikan pengalaman tanpa stres.',
     icon: 'i-heroicons-calendar-days',
   },
   {
-    title: 'Day-of Coordination',
-    description: 'Let us manage your wedding day logistics while you focus on celebrating. We ensure everything runs seamlessly.',
+    title: 'Koordinasi Hari-H',
+    description: 'Biarkan kami mengatur logistik hari pernikahan Anda sementara Anda fokus merayakan. Kami memastikan semuanya berjalan lancar.',
     icon: 'i-heroicons-clipboard-document-check',
   },
   {
-    title: 'Wedding Photography',
-    description: 'Professional photography services to capture every precious moment of your special day with artistic excellence.',
+    title: 'Fotografi Pernikahan',
+    description: 'Layanan fotografi profesional untuk mengabadikan setiap momen berharga di hari spesial Anda dengan keunggulan artistik.',
     icon: 'i-heroicons-camera',
   },
   {
-    title: 'Venue Selection',
-    description: 'We help you find the perfect venue that matches your vision, style, and budget from our extensive network.',
+    title: 'Pemilihan Venue',
+    description: 'Kami membantu Anda menemukan venue sempurna yang sesuai dengan visi, gaya, dan anggaran dari jaringan luas kami.',
     icon: 'i-heroicons-building-library',
   },
   {
-    title: 'Catering & Decor',
-    description: 'Exquisite cuisine and stunning decorations that create an unforgettable atmosphere for your celebration.',
+    title: 'Katering & Dekorasi',
+    description: 'Hidangan lezat dan dekorasi menakjubkan yang menciptakan suasana tak terlupakan untuk perayaan Anda.',
     icon: 'i-heroicons-cake',
   },
   {
-    title: 'Digital Invitations',
-    description: 'Beautiful, interactive digital wedding invitations that your guests will love. Modern and eco-friendly.',
+    title: 'Undangan Digital',
+    description: 'Undangan pernikahan digital yang indah dan interaktif yang akan disukai tamu Anda. Modern dan ramah lingkungan.',
     icon: 'i-heroicons-envelope',
   },
 ]
@@ -77,55 +77,55 @@ const services = [
 const portfolioItems = [
   {
     title: 'Sarah & James',
-    location: 'Bali Garden Wedding',
-    image: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=800&h=600&fit=crop',
+    location: 'Pernikahan Taman Bali',
+    image: 'https://images.pexels.com/photos/1024993/pexels-photo-1024993.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop',
   },
   {
     title: 'Emily & David',
-    location: 'Beach Sunset Ceremony',
-    image: 'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=800&h=600&fit=crop',
+    location: 'Upacara Pantai Sunset',
+    image: 'https://images.pexels.com/photos/1444442/pexels-photo-1444442.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop',
   },
   {
     title: 'Michelle & Ryan',
-    location: 'Elegant Ballroom',
-    image: 'https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?w=800&h=600&fit=crop',
+    location: 'Ballroom Elegan',
+    image: 'https://images.pexels.com/photos/2253870/pexels-photo-2253870.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop',
   },
   {
     title: 'Jessica & Mark',
-    location: 'Rustic Vineyard',
-    image: 'https://images.unsplash.com/photo-1606216794074-735e91aa2c92?w=800&h=600&fit=crop',
+    location: 'Kebun Anggur Rustic',
+    image: 'https://images.pexels.com/photos/2959192/pexels-photo-2959192.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop',
   },
   {
     title: 'Amanda & Chris',
-    location: 'Mountain Retreat',
-    image: 'https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=800&h=600&fit=crop',
+    location: 'Retreat Pegunungan',
+    image: 'https://images.pexels.com/photos/3014856/pexels-photo-3014856.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop',
   },
   {
     title: 'Nicole & Andrew',
-    location: 'Classic Church Wedding',
-    image: 'https://images.unsplash.com/photo-1520854221256-17451cc331bf?w=800&h=600&fit=crop',
+    location: 'Pernikahan Gereja Klasik',
+    image: 'https://images.pexels.com/photos/265722/pexels-photo-265722.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop',
   },
 ]
 
 // Testimonials
 const testimonials = [
   {
-    content: 'Reneo.id made our dream wedding come true! Every detail was perfect, and we could actually enjoy our special day without any stress. Highly recommend their team!',
+    content: 'Reneo.id mewujudkan pernikahan impian kami! Setiap detail sempurna, dan kami bisa menikmati hari spesial tanpa stres. Sangat merekomendasikan tim mereka!',
     author: 'Jennifer & Thomas',
-    role: 'Married December 2024',
-    avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&h=100&fit=crop&crop=face',
+    role: 'Menikah Desember 2024',
+    avatar: 'https://images.pexels.com/photos/1036623/pexels-photo-1036623.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&fit=crop',
   },
   {
-    content: 'The attention to detail and professionalism of the Reneo.id team exceeded all our expectations. They turned our vision into a magical reality.',
+    content: 'Perhatian terhadap detail dan profesionalisme tim Reneo.id melebihi semua ekspektasi kami. Mereka mengubah visi kami menjadi kenyataan yang ajaib.',
     author: 'Lisa & Robert',
-    role: 'Married October 2024',
-    avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100&h=100&fit=crop&crop=face',
+    role: 'Menikah Oktober 2024',
+    avatar: 'https://images.pexels.com/photos/1043471/pexels-photo-1043471.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&fit=crop',
   },
   {
-    content: 'From planning to execution, everything was flawless. Our guests are still talking about how beautiful our wedding was. Thank you, Reneo.id!',
+    content: 'Dari perencanaan hingga eksekusi, semuanya sempurna. Tamu-tamu kami masih membicarakan betapa indahnya pernikahan kami. Terima kasih, Reneo.id!',
     author: 'Maria & Carlos',
-    role: 'Married August 2024',
-    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop&crop=face',
+    role: 'Menikah Agustus 2024',
+    avatar: 'https://images.pexels.com/photos/1181690/pexels-photo-1181690.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&fit=crop',
   },
 ]
 </script>
@@ -137,8 +137,8 @@ const testimonials = [
       <!-- Background Image -->
       <div class="absolute inset-0 z-0">
         <img
-          src="https://images.unsplash.com/photo-1519741497674-611481863552?w=1920&h=1080&fit=crop"
-          alt="Wedding Background"
+          src="https://images.pexels.com/photos/1024993/pexels-photo-1024993.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop"
+          alt="Latar Belakang Pernikahan"
           class="w-full h-full object-cover"
         />
         <div class="absolute inset-0 bg-black/40"></div>
@@ -146,18 +146,18 @@ const testimonials = [
       
       <!-- Hero Content -->
       <div class="relative z-10 text-center text-white px-4 max-w-4xl mx-auto">
-        <p class="text-lg md:text-xl mb-4 tracking-widest uppercase">Welcome to</p>
+        <p class="text-lg md:text-xl mb-4 tracking-widest uppercase">Selamat Datang di</p>
         <h1 class="text-5xl md:text-7xl font-serif font-bold mb-6">Reneo.id</h1>
         <p class="text-xl md:text-2xl mb-4 font-light">Wedding Organizer</p>
         <p class="text-lg md:text-xl mb-8 max-w-2xl mx-auto opacity-90">
-          Creating magical moments and unforgettable celebrations. Let us turn your wedding dreams into a beautiful reality.
+          Menciptakan momen ajaib dan perayaan tak terlupakan. Biarkan kami mewujudkan impian pernikahan Anda menjadi kenyataan indah.
         </p>
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
           <UButton href="#portfolio" size="xl" color="white" variant="solid">
-            View Our Work
+            Lihat Portofolio Kami
           </UButton>
           <UButton to="/contact" size="xl" variant="outline" color="white">
-            Get in Touch
+            Hubungi Kami
           </UButton>
         </div>
       </div>
@@ -173,34 +173,34 @@ const testimonials = [
       <UContainer>
         <div class="grid lg:grid-cols-2 gap-12 items-center">
           <div>
-            <p class="text-primary font-medium mb-2 uppercase tracking-wide">About Us</p>
+            <p class="text-primary font-medium mb-2 uppercase tracking-wide">Tentang Kami</p>
             <h2 class="text-4xl md:text-5xl font-serif font-bold mb-6 text-gray-900">
-              Your Story, Beautifully Told
+              Kisah Anda, Diceritakan dengan Indah
             </h2>
             <p class="text-lg text-gray-600 mb-6">
-              At Reneo.id, we believe that every love story deserves a celebration as unique as the couple themselves. Founded in 2014, we have dedicated ourselves to creating exceptional wedding experiences that reflect the personalities, dreams, and love of each couple we work with.
+              Di Reneo.id, kami percaya bahwa setiap kisah cinta layak mendapat perayaan yang unik seperti pasangan itu sendiri. Didirikan pada tahun 2014, kami telah mendedikasikan diri untuk menciptakan pengalaman pernikahan luar biasa yang mencerminkan kepribadian, impian, dan cinta setiap pasangan yang kami tangani.
             </p>
             <p class="text-lg text-gray-600 mb-8">
-              Our team of passionate wedding professionals brings together creativity, expertise, and meticulous attention to detail to ensure your special day is nothing short of perfect. From intimate gatherings to grand celebrations, we handle every aspect with care and dedication.
+              Tim profesional pernikahan kami yang bersemangat menyatukan kreativitas, keahlian, dan perhatian teliti terhadap detail untuk memastikan hari spesial Anda tidak kurang dari sempurna. Dari pertemuan intim hingga perayaan besar, kami menangani setiap aspek dengan kepedulian dan dedikasi.
             </p>
             <div class="flex gap-4">
               <UButton href="#services" color="primary" size="lg">
-                Our Services
+                Layanan Kami
               </UButton>
               <UButton href="#team" variant="outline" color="gray" size="lg">
-                Meet Our Team
+                Temui Tim Kami
               </UButton>
             </div>
           </div>
           <div class="relative">
             <img
-              src="https://images.unsplash.com/photo-1591604466107-ec97de577aff?w=600&h=700&fit=crop"
-              alt="Wedding Planning"
+              src="https://images.pexels.com/photos/1456613/pexels-photo-1456613.jpeg?auto=compress&cs=tinysrgb&w=600&h=700&fit=crop"
+              alt="Perencanaan Pernikahan"
               class="rounded-lg shadow-2xl w-full"
             />
             <div class="absolute -bottom-6 -left-6 bg-primary text-white p-6 rounded-lg shadow-xl">
               <p class="text-4xl font-bold">10+</p>
-              <p class="text-sm">Years of Excellence</p>
+              <p class="text-sm">Tahun Keunggulan</p>
             </div>
           </div>
         </div>
@@ -223,10 +223,10 @@ const testimonials = [
     <section id="services" class="py-20 bg-white">
       <UContainer>
         <div class="text-center mb-16">
-          <p class="text-primary font-medium mb-2 uppercase tracking-wide">What We Offer</p>
-          <h2 class="text-4xl md:text-5xl font-serif font-bold mb-4 text-gray-900">Our Services</h2>
+          <p class="text-primary font-medium mb-2 uppercase tracking-wide">Yang Kami Tawarkan</p>
+          <h2 class="text-4xl md:text-5xl font-serif font-bold mb-4 text-gray-900">Layanan Kami</h2>
           <p class="text-xl text-gray-600 max-w-2xl mx-auto">
-            Comprehensive wedding planning services tailored to make your special day absolutely perfect
+            Layanan perencanaan pernikahan komprehensif yang disesuaikan untuk membuat hari spesial Anda benar-benar sempurna
           </p>
         </div>
 
@@ -248,7 +248,7 @@ const testimonials = [
 
         <div class="text-center mt-12">
           <UButton to="/services" color="primary" size="lg">
-            View All Services
+            Lihat Semua Layanan
           </UButton>
         </div>
       </UContainer>
@@ -258,10 +258,10 @@ const testimonials = [
     <section id="team" class="py-20 bg-gray-50">
       <UContainer>
         <div class="text-center mb-16">
-          <p class="text-primary font-medium mb-2 uppercase tracking-wide">Our Team</p>
-          <h2 class="text-4xl md:text-5xl font-serif font-bold mb-4 text-gray-900">Meet the Experts</h2>
+          <p class="text-primary font-medium mb-2 uppercase tracking-wide">Tim Kami</p>
+          <h2 class="text-4xl md:text-5xl font-serif font-bold mb-4 text-gray-900">Temui Para Ahli</h2>
           <p class="text-xl text-gray-600 max-w-2xl mx-auto">
-            Our dedicated team of wedding professionals is committed to making your day extraordinary
+            Tim profesional pernikahan kami yang berdedikasi berkomitmen untuk membuat hari Anda luar biasa
           </p>
         </div>
 
@@ -290,10 +290,10 @@ const testimonials = [
     <section id="portfolio" class="py-20 bg-white">
       <UContainer>
         <div class="text-center mb-16">
-          <p class="text-primary font-medium mb-2 uppercase tracking-wide">Our Work</p>
-          <h2 class="text-4xl md:text-5xl font-serif font-bold mb-4 text-gray-900">Wedding Portfolio</h2>
+          <p class="text-primary font-medium mb-2 uppercase tracking-wide">Karya Kami</p>
+          <h2 class="text-4xl md:text-5xl font-serif font-bold mb-4 text-gray-900">Portofolio Pernikahan</h2>
           <p class="text-xl text-gray-600 max-w-2xl mx-auto">
-            Browse through some of our most beautiful weddings and get inspired for your special day
+            Jelajahi beberapa pernikahan terindah kami dan dapatkan inspirasi untuk hari spesial Anda
           </p>
         </div>
 
@@ -319,7 +319,7 @@ const testimonials = [
 
         <div class="text-center mt-12">
           <UButton to="/portfolio" color="primary" size="lg">
-            View Full Portfolio
+            Lihat Portofolio Lengkap
           </UButton>
         </div>
       </UContainer>
@@ -329,10 +329,10 @@ const testimonials = [
     <section class="py-20 bg-gray-50">
       <UContainer>
         <div class="text-center mb-16">
-          <p class="text-primary font-medium mb-2 uppercase tracking-wide">Testimonials</p>
-          <h2 class="text-4xl md:text-5xl font-serif font-bold mb-4 text-gray-900">What Our Couples Say</h2>
+          <p class="text-primary font-medium mb-2 uppercase tracking-wide">Testimoni</p>
+          <h2 class="text-4xl md:text-5xl font-serif font-bold mb-4 text-gray-900">Apa Kata Pasangan Kami</h2>
           <p class="text-xl text-gray-600 max-w-2xl mx-auto">
-            Hear from the happy couples we have had the honor of working with
+            Dengarkan dari pasangan bahagia yang telah kami layani dengan penuh kehormatan
           </p>
         </div>
 
@@ -373,17 +373,17 @@ const testimonials = [
       <UContainer>
         <div class="text-center max-w-3xl mx-auto">
           <h2 class="text-4xl md:text-5xl font-serif font-bold mb-6">
-            Ready to Plan Your Dream Wedding?
+            Siap Merencanakan Pernikahan Impian Anda?
           </h2>
           <p class="text-xl mb-8 opacity-90">
-            Let us help you create the wedding of your dreams. Contact us today for a free consultation and let's start planning your perfect day together.
+            Biarkan kami membantu Anda menciptakan pernikahan impian. Hubungi kami hari ini untuk konsultasi gratis dan mari mulai merencanakan hari sempurna Anda bersama.
           </p>
           <div class="flex flex-col sm:flex-row gap-4 justify-center">
             <UButton to="/contact" size="xl" color="white" variant="solid">
-              Schedule Consultation
+              Jadwalkan Konsultasi
             </UButton>
             <UButton href="tel:+621234567890" size="xl" variant="outline" color="white">
-              Call Us: +62 123 456 7890
+              Hubungi Kami: +62 123 456 7890
             </UButton>
           </div>
         </div>

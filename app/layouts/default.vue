@@ -6,31 +6,31 @@
           to="/"
           color="neutral"
           variant="ghost"
-          label="Home"
+          label="Beranda"
         />
         <UButton
           to="/portfolio"
           color="neutral"
           variant="ghost"
-          label="Portfolio"
+          label="Portofolio"
         />
         <UButton
           to="/services"
           color="neutral"
           variant="ghost"
-          label="Services"
+          label="Layanan"
         />
         <UButton
           to="/invitation"
           color="neutral"
           variant="ghost"
-          label="Invitation"
+          label="Undangan"
         />
         <UButton
           to="/contact"
           color="neutral"
           variant="ghost"
-          label="Contact"
+          label="Kontak"
         />
       </template>
     </UHeader>
