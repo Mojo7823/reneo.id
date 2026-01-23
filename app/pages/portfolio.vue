@@ -1,127 +1,127 @@
 <script setup lang="ts">
 definePageMeta({
-  title: 'Portfolio - Reneo.id',
+  title: 'Portofolio - Reneo.id',
 })
 
 // Portfolio categories
-const categories = ref(['All', 'Wedding', 'Engagement', 'Pre-wedding', 'Reception'])
-const activeCategory = ref('All')
+const categories = ref(['Semua', 'Pernikahan', 'Pertunangan', 'Prewedding', 'Resepsi'])
+const activeCategory = ref('Semua')
 
 // Portfolio items
 const portfolioItems = [
   {
     id: 1,
     title: 'Sarah & James',
-    location: 'Bali Garden Wedding',
-    category: 'Wedding',
-    date: 'December 2024',
-    image: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=800&h=600&fit=crop',
-    description: 'A magical garden wedding surrounded by tropical beauty in Bali.',
+    location: 'Pernikahan Taman Bali',
+    category: 'Pernikahan',
+    date: 'Desember 2024',
+    image: 'https://images.pexels.com/photos/1024993/pexels-photo-1024993.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop',
+    description: 'Pernikahan taman ajaib dikelilingi keindahan tropis di Bali.',
   },
   {
     id: 2,
     title: 'Emily & David',
-    location: 'Beach Sunset Ceremony',
-    category: 'Wedding',
+    location: 'Upacara Pantai Sunset',
+    category: 'Pernikahan',
     date: 'November 2024',
-    image: 'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=800&h=600&fit=crop',
-    description: 'Romantic beach ceremony with a breathtaking sunset backdrop.',
+    image: 'https://images.pexels.com/photos/1444442/pexels-photo-1444442.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop',
+    description: 'Upacara pantai romantis dengan latar belakang sunset memukau.',
   },
   {
     id: 3,
     title: 'Michelle & Ryan',
-    location: 'Elegant Ballroom',
-    category: 'Reception',
-    date: 'October 2024',
-    image: 'https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?w=800&h=600&fit=crop',
-    description: 'Sophisticated ballroom reception with elegant decor and lighting.',
+    location: 'Ballroom Elegan',
+    category: 'Resepsi',
+    date: 'Oktober 2024',
+    image: 'https://images.pexels.com/photos/2253870/pexels-photo-2253870.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop',
+    description: 'Resepsi ballroom elegan dengan dekorasi dan pencahayaan mewah.',
   },
   {
     id: 4,
     title: 'Jessica & Mark',
-    location: 'Rustic Vineyard',
-    category: 'Wedding',
+    location: 'Kebun Anggur Rustic',
+    category: 'Pernikahan',
     date: 'September 2024',
-    image: 'https://images.unsplash.com/photo-1606216794074-735e91aa2c92?w=800&h=600&fit=crop',
-    description: 'Charming vineyard wedding with rustic touches and natural beauty.',
+    image: 'https://images.pexels.com/photos/2959192/pexels-photo-2959192.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop',
+    description: 'Pernikahan kebun anggur menawan dengan sentuhan rustic dan keindahan alami.',
   },
   {
     id: 5,
     title: 'Amanda & Chris',
-    location: 'Mountain Retreat',
-    category: 'Pre-wedding',
-    date: 'August 2024',
-    image: 'https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=800&h=600&fit=crop',
-    description: 'Stunning pre-wedding photoshoot in a serene mountain setting.',
+    location: 'Retreat Pegunungan',
+    category: 'Prewedding',
+    date: 'Agustus 2024',
+    image: 'https://images.pexels.com/photos/3014856/pexels-photo-3014856.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop',
+    description: 'Sesi foto prewedding menakjubkan di suasana pegunungan yang tenang.',
   },
   {
     id: 6,
     title: 'Nicole & Andrew',
-    location: 'Classic Church Wedding',
-    category: 'Wedding',
-    date: 'July 2024',
-    image: 'https://images.unsplash.com/photo-1520854221256-17451cc331bf?w=800&h=600&fit=crop',
-    description: 'Traditional church ceremony with timeless elegance.',
+    location: 'Pernikahan Gereja Klasik',
+    category: 'Pernikahan',
+    date: 'Juli 2024',
+    image: 'https://images.pexels.com/photos/265722/pexels-photo-265722.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop',
+    description: 'Upacara gereja tradisional dengan keanggunan abadi.',
   },
   {
     id: 7,
     title: 'Rachel & Tom',
-    location: 'Romantic Engagement',
-    category: 'Engagement',
-    date: 'June 2024',
-    image: 'https://images.unsplash.com/photo-1529636798458-92182e662485?w=800&h=600&fit=crop',
-    description: 'Intimate engagement session capturing the love between two souls.',
+    location: 'Pertunangan Romantis',
+    category: 'Pertunangan',
+    date: 'Juni 2024',
+    image: 'https://images.pexels.com/photos/1456613/pexels-photo-1456613.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop',
+    description: 'Sesi pertunangan intim mengabadikan cinta antara dua jiwa.',
   },
   {
     id: 8,
     title: 'Sophia & Daniel',
-    location: 'Luxury Resort',
-    category: 'Reception',
-    date: 'May 2024',
-    image: 'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=800&h=600&fit=crop',
-    description: 'Lavish resort reception with stunning ocean views.',
+    location: 'Resort Mewah',
+    category: 'Resepsi',
+    date: 'Mei 2024',
+    image: 'https://images.pexels.com/photos/169198/pexels-photo-169198.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop',
+    description: 'Resepsi resort mewah dengan pemandangan laut menakjubkan.',
   },
   {
     id: 9,
     title: 'Grace & William',
-    location: 'Garden Pre-wedding',
-    category: 'Pre-wedding',
+    location: 'Prewedding Taman',
+    category: 'Prewedding',
     date: 'April 2024',
-    image: 'https://images.unsplash.com/photo-1460978812857-470ed1c77af0?w=800&h=600&fit=crop',
-    description: 'Beautiful garden pre-wedding shoot with blooming flowers.',
+    image: 'https://images.pexels.com/photos/1035665/pexels-photo-1035665.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop',
+    description: 'Sesi prewedding taman indah dengan bunga-bunga bermekaran.',
   },
   {
     id: 10,
     title: 'Hannah & Lucas',
-    location: 'Romantic Sunset',
-    category: 'Engagement',
-    date: 'March 2024',
-    image: 'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=800&h=600&fit=crop',
-    description: 'Golden hour engagement photos with a beautiful couple.',
+    location: 'Sunset Romantis',
+    category: 'Pertunangan',
+    date: 'Maret 2024',
+    image: 'https://images.pexels.com/photos/1589216/pexels-photo-1589216.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop',
+    description: 'Foto pertunangan golden hour dengan pasangan cantik.',
   },
   {
     id: 11,
     title: 'Megan & Jake',
-    location: 'Indoor Celebration',
-    category: 'Reception',
-    date: 'February 2024',
-    image: 'https://images.unsplash.com/photo-1478146059778-26028b07395a?w=800&h=600&fit=crop',
-    description: 'Elegant indoor reception with beautiful table arrangements.',
+    location: 'Perayaan Indoor',
+    category: 'Resepsi',
+    date: 'Februari 2024',
+    image: 'https://images.pexels.com/photos/1045541/pexels-photo-1045541.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop',
+    description: 'Resepsi indoor elegan dengan penataan meja yang indah.',
   },
   {
     id: 12,
     title: 'Olivia & Ethan',
-    location: 'Tropical Paradise',
-    category: 'Wedding',
-    date: 'January 2024',
-    image: 'https://images.unsplash.com/photo-1545232979-8bf68ee9b1af?w=800&h=600&fit=crop',
-    description: 'Destination wedding in a tropical paradise.',
+    location: 'Surga Tropis',
+    category: 'Pernikahan',
+    date: 'Januari 2024',
+    image: 'https://images.pexels.com/photos/1702373/pexels-photo-1702373.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&fit=crop',
+    description: 'Pernikahan destinasi di surga tropis.',
   },
 ]
 
 // Computed filtered items
 const filteredItems = computed(() => {
-  if (activeCategory.value === 'All') {
+  if (activeCategory.value === 'Semua') {
     return portfolioItems
   }
   return portfolioItems.filter((item) => item.category === activeCategory.value)
@@ -134,16 +134,16 @@ const filteredItems = computed(() => {
     <section class="relative py-20 bg-gray-900">
       <div class="absolute inset-0 z-0">
         <img
-          src="https://images.unsplash.com/photo-1537633552985-df8429e8048b?w=1920&h=600&fit=crop"
-          alt="Portfolio Hero"
+          src="https://images.pexels.com/photos/1024993/pexels-photo-1024993.jpeg?auto=compress&cs=tinysrgb&w=1920&h=600&fit=crop"
+          alt="Hero Portofolio"
           class="w-full h-full object-cover opacity-40"
         />
       </div>
       <UContainer class="relative z-10">
         <div class="text-center text-white">
-          <h1 class="text-5xl md:text-6xl font-serif font-bold mb-4">Our Portfolio</h1>
+          <h1 class="text-5xl md:text-6xl font-serif font-bold mb-4">Portofolio Kami</h1>
           <p class="text-xl md:text-2xl opacity-90 max-w-2xl mx-auto">
-            Browse through our collection of beautiful weddings and celebrations. Each moment captured tells a unique love story.
+            Jelajahi koleksi pernikahan dan perayaan indah kami. Setiap momen yang diabadikan menceritakan kisah cinta yang unik.
           </p>
         </div>
       </UContainer>
@@ -203,7 +203,7 @@ const filteredItems = computed(() => {
         <!-- Empty State -->
         <div v-if="filteredItems.length === 0" class="text-center py-16">
           <UIcon name="i-heroicons-photo" class="w-16 h-16 text-gray-300 mx-auto mb-4" />
-          <p class="text-gray-500 text-lg">No items found in this category.</p>
+          <p class="text-gray-500 text-lg">Tidak ada item ditemukan di kategori ini.</p>
         </div>
       </UContainer>
     </section>
@@ -213,13 +213,13 @@ const filteredItems = computed(() => {
       <UContainer>
         <div class="text-center max-w-3xl mx-auto">
           <h2 class="text-3xl md:text-4xl font-serif font-bold mb-4">
-            Want Your Wedding Featured Here?
+            Ingin Pernikahan Anda Ditampilkan Di Sini?
           </h2>
           <p class="text-lg mb-8 opacity-90">
-            Let us capture your special moments and create timeless memories for you to cherish forever.
+            Biarkan kami mengabadikan momen spesial Anda dan menciptakan kenangan abadi untuk Anda hargai selamanya.
           </p>
           <UButton to="/contact" size="xl" color="white" variant="solid">
-            Contact Us Today
+            Hubungi Kami Hari Ini
           </UButton>
         </div>
       </UContainer>
