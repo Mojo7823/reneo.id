@@ -29,6 +29,33 @@ nuxtApp.hook('page:finish', () => {
     isLoading.value = false
   }, 300)
 })
+
+// Scroll to section function for navigation
+const scrollToSection = (sectionId: string) => {
+  // If not on home page, navigate to home first then scroll
+  if (route.path !== '/') {
+    router.push('/').then(() => {
+      setTimeout(() => {
+        const element = document.getElementById(sectionId)
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' })
+        } else if (sectionId === 'hero') {
+          window.scrollTo({ top: 0, behavior: 'smooth' })
+        }
+      }, 100)
+    })
+  } else {
+    // Already on home page, just scroll
+    if (sectionId === 'hero') {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    } else {
+      const element = document.getElementById(sectionId)
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' })
+      }
+    }
+  }
+}
 </script>
 
 <template>
@@ -44,10 +71,18 @@ nuxtApp.hook('page:finish', () => {
     <UHeader title="Reneo.id" to="/">
       <template #right>
         <UButton
-          to="/"
+          to="/#hero"
           color="neutral"
           variant="ghost"
           label="Beranda"
+          @click.prevent="scrollToSection('hero')"
+        />
+        <UButton
+          to="/#about"
+          color="neutral"
+          variant="ghost"
+          label="Tentang Kami"
+          @click.prevent="scrollToSection('about')"
         />
         <UButton
           to="/portfolio"
@@ -56,22 +91,18 @@ nuxtApp.hook('page:finish', () => {
           label="Portofolio"
         />
         <UButton
-          to="/services"
+          to="/#packages"
           color="neutral"
           variant="ghost"
-          label="Layanan"
+          label="Paket"
+          @click.prevent="scrollToSection('packages')"
         />
         <UButton
-          to="/invitation"
+          to="/#location"
           color="neutral"
           variant="ghost"
-          label="Undangan"
-        />
-        <UButton
-          to="/contact"
-          color="neutral"
-          variant="ghost"
-          label="Kontak"
+          label="Lokasi"
+          @click.prevent="scrollToSection('location')"
         />
       </template>
     </UHeader>
@@ -112,7 +143,7 @@ nuxtApp.hook('page:finish', () => {
 
     <!-- Floating WhatsApp Button -->
     <a
-      href="https://wa.me/6285555555555"
+      href="https://wa.me/6285158151161"
       target="_blank"
       rel="noopener noreferrer"
       class="whatsapp-float"
