@@ -3,6 +3,94 @@ definePageMeta({
   title: 'Home - Reneo.id Wedding Organizer',
 })
 
+// Carousel for About section
+const carouselSlides = [
+  {
+    image: 'https://images.pexels.com/photos/1024993/pexels-photo-1024993.jpeg?auto=compress&cs=tinysrgb&w=1200&h=800&fit=crop',
+    title: '10+ Tahun Keunggulan',
+    description: 'Lebih dari satu dekade menghadirkan pernikahan impian untuk pasangan Indonesia'
+  },
+  {
+    image: 'https://images.pexels.com/photos/1444442/pexels-photo-1444442.jpeg?auto=compress&cs=tinysrgb&w=1200&h=800&fit=crop',
+    title: '500+ Pasangan Bahagia',
+    description: 'Ratusan pasangan telah mempercayakan momen spesial mereka kepada kami'
+  },
+  {
+    image: 'https://images.pexels.com/photos/2253870/pexels-photo-2253870.jpeg?auto=compress&cs=tinysrgb&w=1200&h=800&fit=crop',
+    title: '300+ Undangan Senang',
+    description: 'Undangan digital yang memukau dan berkesan untuk setiap tamu undangan'
+  },
+  {
+    image: 'https://images.pexels.com/photos/3014856/pexels-photo-3014856.jpeg?auto=compress&cs=tinysrgb&w=1200&h=800&fit=crop',
+    title: '1TB Foto Diabadikan',
+    description: 'Ribuan momen berharga yang kami abadikan dalam setiap pernikahan'
+  },
+]
+
+const currentSlide = ref(0)
+let slideInterval: ReturnType<typeof setInterval> | null = null
+
+const nextSlide = () => {
+  currentSlide.value = (currentSlide.value + 1) % carouselSlides.length
+}
+
+const prevSlide = () => {
+  currentSlide.value = (currentSlide.value - 1 + carouselSlides.length) % carouselSlides.length
+}
+
+const goToSlide = (index: number) => {
+  currentSlide.value = index
+}
+
+const startAutoSlide = () => {
+  slideInterval = setInterval(nextSlide, 5000)
+}
+
+const stopAutoSlide = () => {
+  if (slideInterval) {
+    clearInterval(slideInterval)
+    slideInterval = null
+  }
+}
+
+// Scroll down function
+const scrollToAbout = () => {
+  const aboutSection = document.getElementById('about')
+  if (aboutSection) {
+    aboutSection.scrollIntoView({ behavior: 'smooth' })
+  }
+}
+
+// Scroll animation observer
+const observeElements = () => {
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-in')
+        }
+      })
+    },
+    {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    }
+  )
+
+  const animatedElements = document.querySelectorAll('.scroll-animate, .scroll-animate-left, .scroll-animate-right, .scroll-animate-scale')
+  animatedElements.forEach((el) => observer.observe(el))
+}
+
+onMounted(() => {
+  startAutoSlide()
+  observeElements()
+})
+
+onUnmounted(() => {
+  stopAutoSlide()
+})
+
+
 // Company statistics
 const stats = [
   { label: 'Pernikahan Diselenggarakan', value: '500+' },
@@ -153,26 +241,30 @@ const testimonials = [
           Menciptakan momen ajaib dan perayaan tak terlupakan. Biarkan kami mewujudkan impian pernikahan Anda menjadi kenyataan indah.
         </p>
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
-          <UButton href="#portfolio" size="xl" color="white" variant="solid">
+          <UButton href="#portfolio" size="xl" color="neutral" variant="solid">
             Lihat Portofolio Kami
           </UButton>
-          <UButton to="/contact" size="xl" variant="outline" color="white">
+          <UButton to="/contact" size="xl" variant="outline" color="neutral">
             Hubungi Kami
           </UButton>
         </div>
       </div>
       
-      <!-- Scroll Indicator -->
-      <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-        <UIcon name="i-heroicons-chevron-down" class="w-8 h-8 text-white" />
-      </div>
+      <!-- Scroll Indicator - Clickable -->
+      <button 
+        @click="scrollToAbout" 
+        class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce scroll-down-btn focus:outline-none"
+        aria-label="Scroll ke bawah"
+      >
+        <UIcon name="i-heroicons-chevron-down" class="w-10 h-10 text-white hover:text-primary transition-colors" />
+      </button>
     </section>
 
     <!-- About Section -->
     <section id="about" class="py-20 bg-white">
       <UContainer>
         <div class="grid lg:grid-cols-2 gap-12 items-center">
-          <div>
+          <div class="scroll-animate-left">
             <p class="text-primary font-medium mb-2 uppercase tracking-wide">Tentang Kami</p>
             <h2 class="text-4xl md:text-5xl font-serif font-bold mb-6 text-gray-900">
               Kisah Anda, Diceritakan dengan Indah
@@ -187,20 +279,59 @@ const testimonials = [
               <UButton href="#services" color="primary" size="lg">
                 Layanan Kami
               </UButton>
-              <UButton href="#team" variant="outline" color="gray" size="lg">
+              <UButton href="#team" variant="outline" color="neutral" size="lg">
                 Temui Tim Kami
               </UButton>
             </div>
           </div>
-          <div class="relative">
-            <img
-              src="https://images.pexels.com/photos/1456613/pexels-photo-1456613.jpeg?auto=compress&cs=tinysrgb&w=600&h=700&fit=crop"
-              alt="Perencanaan Pernikahan"
-              class="rounded-lg shadow-2xl w-full"
-            />
-            <div class="absolute -bottom-6 -left-6 bg-primary text-white p-6 rounded-lg shadow-xl">
-              <p class="text-4xl font-bold">10+</p>
-              <p class="text-sm">Tahun Keunggulan</p>
+          
+          <!-- Carousel -->
+          <div 
+            class="scroll-animate-right carousel-container"
+            @mouseenter="stopAutoSlide"
+            @mouseleave="startAutoSlide"
+          >
+            <div 
+              class="carousel-track"
+              :style="{ transform: `translateX(-${currentSlide * 100}%)` }"
+            >
+              <div 
+                v-for="(slide, index) in carouselSlides" 
+                :key="index"
+                class="carousel-slide"
+              >
+                <img
+                  :src="slide.image"
+                  :alt="slide.title"
+                  class="carousel-image"
+                />
+                <div class="carousel-overlay">
+                  <div class="carousel-caption">
+                    <h3>{{ slide.title }}</h3>
+                    <p>{{ slide.description }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Navigation Arrows -->
+            <button class="carousel-nav prev" @click="prevSlide" aria-label="Slide sebelumnya">
+              <UIcon name="i-heroicons-chevron-left" class="w-6 h-6 text-gray-700" />
+            </button>
+            <button class="carousel-nav next" @click="nextSlide" aria-label="Slide selanjutnya">
+              <UIcon name="i-heroicons-chevron-right" class="w-6 h-6 text-gray-700" />
+            </button>
+            
+            <!-- Dots -->
+            <div class="carousel-dots">
+              <button
+                v-for="(slide, index) in carouselSlides"
+                :key="index"
+                class="carousel-dot"
+                :class="{ active: currentSlide === index }"
+                @click="goToSlide(index)"
+                :aria-label="`Go to slide ${index + 1}`"
+              ></button>
             </div>
           </div>
         </div>
@@ -211,7 +342,12 @@ const testimonials = [
     <section class="py-16 bg-gray-50">
       <UContainer>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
-          <div v-for="stat in stats" :key="stat.label" class="text-center">
+          <div 
+            v-for="(stat, index) in stats" 
+            :key="stat.label" 
+            class="text-center scroll-animate-scale"
+            :class="`delay-${(index + 1) * 100}`"
+          >
             <p class="text-4xl md:text-5xl font-bold text-primary mb-2">{{ stat.value }}</p>
             <p class="text-gray-600">{{ stat.label }}</p>
           </div>
@@ -222,7 +358,7 @@ const testimonials = [
     <!-- Services Section -->
     <section id="services" class="py-20 bg-white">
       <UContainer>
-        <div class="text-center mb-16">
+        <div class="text-center mb-16 scroll-animate">
           <p class="text-primary font-medium mb-2 uppercase tracking-wide">Yang Kami Tawarkan</p>
           <h2 class="text-4xl md:text-5xl font-serif font-bold mb-4 text-gray-900">Layanan Kami</h2>
           <p class="text-xl text-gray-600 max-w-2xl mx-auto">
@@ -232,9 +368,10 @@ const testimonials = [
 
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           <UCard
-            v-for="service in services"
+            v-for="(service, index) in services"
             :key="service.title"
-            class="hover:shadow-lg transition-shadow duration-300"
+            class="hover:shadow-lg transition-shadow duration-300 scroll-animate"
+            :class="`delay-${((index % 3) + 1) * 100}`"
           >
             <div class="text-center p-4">
               <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -257,7 +394,7 @@ const testimonials = [
     <!-- Team Section -->
     <section id="team" class="py-20 bg-gray-50">
       <UContainer>
-        <div class="text-center mb-16">
+        <div class="text-center mb-16 scroll-animate">
           <p class="text-primary font-medium mb-2 uppercase tracking-wide">Tim Kami</p>
           <h2 class="text-4xl md:text-5xl font-serif font-bold mb-4 text-gray-900">Temui Para Ahli</h2>
           <p class="text-xl text-gray-600 max-w-2xl mx-auto">
@@ -267,10 +404,11 @@ const testimonials = [
 
         <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           <div
-            v-for="member in team"
+            v-for="(member, index) in team"
             :key="member.name"
-            class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300"
-          >
+            class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 scroll-animate"
+            :class="`delay-${(index + 1) * 100}`"
+            >
             <img
               :src="member.image"
               :alt="member.name"
@@ -289,7 +427,7 @@ const testimonials = [
     <!-- Portfolio Section -->
     <section id="portfolio" class="py-20 bg-white">
       <UContainer>
-        <div class="text-center mb-16">
+        <div class="text-center mb-16 scroll-animate">
           <p class="text-primary font-medium mb-2 uppercase tracking-wide">Karya Kami</p>
           <h2 class="text-4xl md:text-5xl font-serif font-bold mb-4 text-gray-900">Portofolio Pernikahan</h2>
           <p class="text-xl text-gray-600 max-w-2xl mx-auto">
@@ -299,9 +437,10 @@ const testimonials = [
 
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           <div
-            v-for="item in portfolioItems"
+            v-for="(item, index) in portfolioItems"
             :key="item.title"
-            class="group relative overflow-hidden rounded-lg cursor-pointer"
+            class="group relative overflow-hidden rounded-lg cursor-pointer scroll-animate-scale"
+            :class="`delay-${((index % 3) + 1) * 100}`"
           >
             <img
               :src="item.image"
@@ -317,7 +456,7 @@ const testimonials = [
           </div>
         </div>
 
-        <div class="text-center mt-12">
+        <div class="text-center mt-12 scroll-animate">
           <UButton to="/portfolio" color="primary" size="lg">
             Lihat Portofolio Lengkap
           </UButton>
@@ -328,7 +467,7 @@ const testimonials = [
     <!-- Testimonials Section -->
     <section class="py-20 bg-gray-50">
       <UContainer>
-        <div class="text-center mb-16">
+        <div class="text-center mb-16 scroll-animate">
           <p class="text-primary font-medium mb-2 uppercase tracking-wide">Testimoni</p>
           <h2 class="text-4xl md:text-5xl font-serif font-bold mb-4 text-gray-900">Apa Kata Pasangan Kami</h2>
           <p class="text-xl text-gray-600 max-w-2xl mx-auto">
@@ -338,9 +477,10 @@ const testimonials = [
 
         <div class="grid md:grid-cols-3 gap-8">
           <UCard
-            v-for="testimonial in testimonials"
+            v-for="(testimonial, index) in testimonials"
             :key="testimonial.author"
-            class="hover:shadow-lg transition-shadow duration-300"
+            class="hover:shadow-lg transition-shadow duration-300 scroll-animate"
+            :class="`delay-${(index + 1) * 100}`"
           >
             <div class="p-6">
               <div class="flex items-center mb-4">
@@ -371,7 +511,7 @@ const testimonials = [
     <!-- CTA Section -->
     <section class="py-20 bg-primary text-white">
       <UContainer>
-        <div class="text-center max-w-3xl mx-auto">
+       <div class="text-center max-w-3xl mx-auto scroll-animate">
           <h2 class="text-4xl md:text-5xl font-serif font-bold mb-6">
             Siap Merencanakan Pernikahan Impian Anda?
           </h2>
@@ -379,10 +519,10 @@ const testimonials = [
             Biarkan kami membantu Anda menciptakan pernikahan impian. Hubungi kami hari ini untuk konsultasi gratis dan mari mulai merencanakan hari sempurna Anda bersama.
           </p>
           <div class="flex flex-col sm:flex-row gap-4 justify-center">
-            <UButton to="/contact" size="xl" color="white" variant="solid">
+            <UButton to="/contact" size="xl" color="neutral" variant="solid">
               Jadwalkan Konsultasi
             </UButton>
-            <UButton href="tel:+621234567890" size="xl" variant="outline" color="white">
+            <UButton href="tel:+621234567890" size="xl" variant="outline" color="neutral">
               Hubungi Kami: +62 123 456 7890
             </UButton>
           </div>
