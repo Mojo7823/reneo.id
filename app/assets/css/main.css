@@ -354,3 +354,93 @@ html {
 .scroll-down-btn:hover {
   transform: translateY(5px);
 }
+
+/* ========================================
+   Navigation Link Styles
+   ======================================== */
+.nav-link {
+  position: relative;
+  padding: 0.5rem 0.875rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #525252;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.25s ease;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background-color: #1A1A1A;
+  transition: width 0.3s ease, left 0.3s ease;
+}
+
+.nav-link:hover {
+  color: #1A1A1A;
+}
+
+.nav-link:hover::after {
+  width: 60%;
+  left: 20%;
+}
+
+.nav-link-active {
+  color: #1A1A1A;
+}
+
+.nav-link-active::after {
+  width: 60%;
+  left: 20%;
+}
+
+/* Mobile nav links */
+.mobile-nav-link {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 0.75rem 1rem;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: #525252;
+  background: none;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.mobile-nav-link:hover {
+  color: #1A1A1A;
+  background-color: #F5F5F5;
+}
+
+.mobile-nav-link-active {
+  color: #1A1A1A;
+  background-color: #F5F5F5;
+  border-left: 3px solid #1A1A1A;
+}
+
+/* Mobile menu transition */
+.mobile-menu-enter-active {
+  transition: all 0.3s ease-out;
+}
+
+.mobile-menu-leave-active {
+  transition: all 0.2s ease-in;
+}
+
+.mobile-menu-enter-from {
+  opacity: 0;
+  transform: translateY(-8px);
+}
+
+.mobile-menu-leave-to {
+  opacity: 0;
+  transform: translateY(-8px);
+}

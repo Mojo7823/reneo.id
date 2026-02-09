@@ -1,25 +1,42 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 
 const route = useRoute()
 const router = useRouter()
 const isLoading = ref(false)
+const mobileMenuOpen = ref(false)
 
-// Watch for route changes to trigger loading animation
+const { activeSection, setup: setupObserver, teardown: teardownObserver, reset: resetActiveSection } = useActiveSection()
+
+onMounted(() => {
+  setupObserver()
+})
+
+onUnmounted(() => {
+  teardownObserver()
+})
+
+// Loading transitions
 router.beforeEach((to, from) => {
   if (to.path !== from.path) {
     isLoading.value = true
   }
 })
 
-router.afterEach(() => {
-  // Small delay to ensure the page content is ready
+router.afterEach((to) => {
   setTimeout(() => {
     isLoading.value = false
   }, 400)
+
+  // Re-observe sections after page change since DOM has changed
+  if (to.path === '/') {
+    resetActiveSection()
+    nextTick(() => {
+      setTimeout(() => setupObserver(), 200)
+    })
+  }
 })
 
-// Also handle initial page load
 const nuxtApp = useNuxtApp()
 nuxtApp.hook('page:start', () => {
   isLoading.value = true
@@ -30,85 +47,132 @@ nuxtApp.hook('page:finish', () => {
   }, 300)
 })
 
-// Scroll to section function for navigation
-const scrollToSection = (sectionId: string) => {
-  // If not on home page, navigate to home first then scroll
+interface NavItem {
+  label: string
+  sectionId: string
+  route?: string
+}
+
+const navItems: NavItem[] = [
+  { label: 'Beranda', sectionId: 'hero' },
+  { label: 'Tentang Kami', sectionId: 'about' },
+  { label: 'Portofolio', sectionId: 'portfolio', route: '/portfolio' },
+  { label: 'Paket', sectionId: 'packages' },
+  { label: 'Lokasi', sectionId: 'location' },
+  { label: 'Hubungi Kami', sectionId: 'contact' }
+]
+
+function scrollToSection(sectionId: string) {
+  mobileMenuOpen.value = false
+
+  if (sectionId === 'portfolio') {
+    router.push('/portfolio')
+    return
+  }
+
   if (route.path !== '/') {
     router.push('/').then(() => {
       setTimeout(() => {
-        const element = document.getElementById(sectionId)
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth' })
-        } else if (sectionId === 'hero') {
-          window.scrollTo({ top: 0, behavior: 'smooth' })
-        }
-      }, 100)
+        doScroll(sectionId)
+      }, 150)
     })
   } else {
-    // Already on home page, just scroll
-    if (sectionId === 'hero') {
-      window.scrollTo({ top: 0, behavior: 'smooth' })
-    } else {
-      const element = document.getElementById(sectionId)
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' })
-      }
-    }
+    doScroll(sectionId)
   }
+}
+
+function doScroll(sectionId: string) {
+  if (sectionId === 'hero') {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+    return
+  }
+  const el = document.getElementById(sectionId)
+  if (el) {
+    const headerHeight = 64
+    const top = el.getBoundingClientRect().top + window.scrollY - headerHeight
+    window.scrollTo({ top, behavior: 'smooth' })
+  }
+}
+
+function isActive(item: NavItem): boolean {
+  if (item.route && route.path === '/portfolio') return true
+  if (route.path !== '/' && !item.route) return false
+  return activeSection.value === item.sectionId
 }
 </script>
 
 <template>
   <div>
     <!-- Page Transition Loading Overlay -->
-    <div 
+    <div
       class="page-transition-overlay"
       :class="{ active: isLoading }"
     >
       <div class="page-spinner"></div>
     </div>
 
-    <UHeader title="Reneo.id" to="/">
-      <template #right>
-        <UButton
-          to="/#hero"
-          color="neutral"
-          variant="ghost"
-          label="Beranda"
-          @click.prevent="scrollToSection('hero')"
-        />
-        <UButton
-          to="/#about"
-          color="neutral"
-          variant="ghost"
-          label="Tentang Kami"
-          @click.prevent="scrollToSection('about')"
-        />
-        <UButton
-          to="/portfolio"
-          color="neutral"
-          variant="ghost"
-          label="Portofolio"
-        />
-        <UButton
-          to="/#packages"
-          color="neutral"
-          variant="ghost"
-          label="Paket"
-          @click.prevent="scrollToSection('packages')"
-        />
-        <UButton
-          to="/#location"
-          color="neutral"
-          variant="ghost"
-          label="Lokasi"
-          @click.prevent="scrollToSection('location')"
-        />
-      </template>
-    </UHeader>
+    <!-- Header -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100 h-16">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 h-full flex items-center justify-between">
+        <!-- Logo -->
+        <NuxtLink to="/" class="text-xl font-bold text-gray-900 shrink-0" @click.prevent="scrollToSection('hero')">
+          Reneo.id
+        </NuxtLink>
+
+        <!-- Desktop Nav -->
+        <nav class="hidden lg:flex items-center gap-1">
+          <button
+            v-for="item in navItems"
+            :key="item.sectionId"
+            class="nav-link"
+            :class="{ 'nav-link-active': isActive(item) }"
+            @click="scrollToSection(item.sectionId)"
+          >
+            {{ item.label }}
+          </button>
+        </nav>
+
+        <!-- Mobile burger -->
+        <button
+          class="lg:hidden p-2 -mr-2 text-gray-700 hover:text-gray-900 transition-colors"
+          aria-label="Menu"
+          @click="mobileMenuOpen = !mobileMenuOpen"
+        >
+          <svg v-if="!mobileMenuOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+          <svg v-else class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Mobile Menu -->
+      <Transition name="mobile-menu">
+        <div
+          v-if="mobileMenuOpen"
+          class="lg:hidden bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-lg"
+        >
+          <nav class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex flex-col gap-1">
+            <button
+              v-for="item in navItems"
+              :key="item.sectionId"
+              class="mobile-nav-link"
+              :class="{ 'mobile-nav-link-active': isActive(item) }"
+              @click="scrollToSection(item.sectionId)"
+            >
+              {{ item.label }}
+            </button>
+          </nav>
+        </div>
+      </Transition>
+    </header>
+
+    <!-- Spacer for fixed header -->
+    <div class="h-16"></div>
 
     <UMain>
-      <div 
+      <div
         class="page-content"
         :class="{ loading: isLoading }"
       >
@@ -118,24 +182,27 @@ const scrollToSection = (sectionId: string) => {
 
     <UFooter>
       <template #left>
-        <p class="text-sm text-muted">
-          © {{ new Date().getFullYear() }} Reneo.id - Wedding Organizer
-        </p>
+        <div>
+          <p class="text-sm text-muted">
+            © {{ new Date().getFullYear() }} Reneo.id - Wedding Organizer
+          </p>
+          <p class="text-[10px] text-gray-300 mt-0.5">Nymbx Dev.</p>
+        </div>
       </template>
-      
+
       <template #right>
         <UButton
           icon="i-simple-icons-instagram"
           color="neutral"
           variant="ghost"
-          to="https://instagram.com"
+          to="https://instagram.com/reneo.planner"
           target="_blank"
         />
         <UButton
-          icon="i-simple-icons-facebook"
+          icon="i-simple-icons-whatsapp"
           color="neutral"
           variant="ghost"
-          to="https://facebook.com"
+          to="https://wa.me/6285158151161"
           target="_blank"
         />
       </template>

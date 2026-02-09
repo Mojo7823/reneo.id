@@ -761,21 +761,86 @@ const packages = [
       </UContainer>
     </section>
 
-    <!-- CTA Section -->
-    <section class="py-20 bg-primary text-white">
+    <!-- Contact / Hubungi Kami Section -->
+    <section id="contact" class="py-20 bg-gray-50">
       <UContainer>
-       <div class="text-center max-w-3xl mx-auto scroll-animate">
-          <h2 class="text-4xl md:text-5xl font-serif font-bold mb-6">
+        <div class="text-center mb-16 scroll-animate">
+          <p class="text-primary font-medium mb-2 uppercase tracking-wide">Hubungi Kami</p>
+          <h2 class="text-4xl md:text-5xl font-serif font-bold mb-4 text-gray-900">
             Siap Merencanakan Pernikahan Impian Anda?
           </h2>
-          <p class="text-xl mb-8 opacity-90">
-            Biarkan kami membantu Anda menciptakan pernikahan impian. Hubungi kami hari ini untuk konsultasi gratis dan mari mulai merencanakan hari sempurna Anda bersama.
+          <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+            Hubungi kami untuk konsultasi gratis dan mari mulai merencanakan hari sempurna Anda bersama.
           </p>
-          <div class="flex justify-center">
-            <UButton href="https://wa.me/6285158151161" target="_blank" size="xl" color="neutral" variant="solid">
-              Jadwalkan Konsultasi
-            </UButton>
-          </div>
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-4xl mx-auto">
+          <!-- WhatsApp -->
+          <a
+            href="https://wa.me/6285158151161"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="scroll-animate delay-100"
+          >
+            <UCard class="h-full hover:shadow-lg transition-shadow duration-300 text-center">
+              <div class="p-6">
+                <div class="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <UIcon name="i-simple-icons-whatsapp" class="w-7 h-7 text-primary" />
+                </div>
+                <h3 class="text-lg font-semibold text-gray-900 mb-2">Telp / WhatsApp</h3>
+                <p class="text-gray-600">085158151161</p>
+              </div>
+            </UCard>
+          </a>
+
+          <!-- Instagram -->
+          <a
+            href="https://instagram.com/reneo.planner"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="scroll-animate delay-200"
+          >
+            <UCard class="h-full hover:shadow-lg transition-shadow duration-300 text-center">
+              <div class="p-6">
+                <div class="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <UIcon name="i-simple-icons-instagram" class="w-7 h-7 text-primary" />
+                </div>
+                <h3 class="text-lg font-semibold text-gray-900 mb-2">Instagram</h3>
+                <p class="text-gray-600">RENEO.PLANNER</p>
+              </div>
+            </UCard>
+          </a>
+
+          <!-- Address -->
+          <a
+            href="https://maps.google.com/?q=Gembili+Raya+No+11b+Surabaya"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="scroll-animate delay-300 md:col-span-2 lg:col-span-1"
+          >
+            <UCard class="h-full hover:shadow-lg transition-shadow duration-300 text-center">
+              <div class="p-6">
+                <div class="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <UIcon name="i-heroicons-map-pin" class="w-7 h-7 text-primary" />
+                </div>
+                <h3 class="text-lg font-semibold text-gray-900 mb-2">Alamat</h3>
+                <p class="text-gray-600">Gembili Raya No 11b,<br>Surabaya, Indonesia</p>
+              </div>
+            </UCard>
+          </a>
+        </div>
+
+        <!-- CTA Button -->
+        <div class="text-center mt-12 scroll-animate">
+          <UButton
+            href="https://wa.me/6285158151161"
+            target="_blank"
+            size="xl"
+            color="neutral"
+            variant="solid"
+          >
+            Jadwalkan Konsultasi
+          </UButton>
         </div>
       </UContainer>
     </section>
