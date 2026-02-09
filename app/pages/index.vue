@@ -585,7 +585,7 @@ const packages = [
                 :key="i"
                 :name="filled ? 'i-heroicons-star-solid' : 'i-heroicons-star'" 
                 class="w-6 h-6"
-                :class="filled ? 'text-yellow-400' : 'text-gray-300'"
+                :class="filled ? 'text-gray-800' : 'text-gray-300'"
               />
             </div>
             <div class="text-left">
@@ -643,7 +643,7 @@ const packages = [
                         :key="i"
                         :name="filled ? 'i-heroicons-star-solid' : 'i-heroicons-star'" 
                         class="w-4 h-4"
-                        :class="filled ? 'text-yellow-400' : 'text-gray-300'"
+                        :class="filled ? 'text-gray-800' : 'text-gray-300'"
                       />
                     </div>
                   </div>
