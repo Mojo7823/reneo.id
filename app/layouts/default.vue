@@ -5,15 +5,27 @@ const route = useRoute()
 const router = useRouter()
 const isLoading = ref(false)
 const mobileMenuOpen = ref(false)
+const headerRef = ref<HTMLElement | null>(null)
 
 const { activeSection, setup: setupObserver, teardown: teardownObserver, reset: resetActiveSection } = useActiveSection()
 
 onMounted(() => {
   setupObserver()
+  nextTick(() => {
+    syncHeaderOffset()
+  })
+  window.addEventListener('resize', syncHeaderOffset, { passive: true })
 })
 
 onUnmounted(() => {
   teardownObserver()
+  window.removeEventListener('resize', syncHeaderOffset)
+})
+
+watch(mobileMenuOpen, () => {
+  nextTick(() => {
+    syncHeaderOffset()
+  })
 })
 
 // Loading transitions
@@ -88,10 +100,16 @@ function doScroll(sectionId: string) {
   }
   const el = document.getElementById(sectionId)
   if (el) {
-    const headerHeight = 64
-    const top = el.getBoundingClientRect().top + window.scrollY - headerHeight
-    window.scrollTo({ top, behavior: 'smooth' })
+    const headerOffset = headerRef.value?.offsetHeight ?? 0
+    const top = el.getBoundingClientRect().top + window.scrollY
+    window.scrollTo({ top: Math.max(0, top - headerOffset), behavior: 'smooth' })
   }
+}
+
+function syncHeaderOffset() {
+  if (typeof window === 'undefined') return
+  const headerHeight = headerRef.value?.offsetHeight ?? 0
+  document.documentElement.style.setProperty('--site-header-height', `${headerHeight}px`)
 }
 
 function isActive(item: NavItem): boolean {
@@ -112,15 +130,35 @@ function isActive(item: NavItem): boolean {
     </div>
 
     <!-- Header -->
-    <header class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100 h-16">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 h-full flex items-center justify-between">
-        <!-- Logo -->
-        <NuxtLink to="/" class="text-xl font-bold text-gray-900 shrink-0" @click.prevent="scrollToSection('hero')">
-          Reneo.id
-        </NuxtLink>
+    <header
+      ref="headerRef"
+      class="site-header fixed top-0 inset-x-0 z-[140]"
+      style="position: fixed; top: 0; left: 0; right: 0;"
+    >
+      <div class="site-header-inner">
+        <div class="site-header-top">
+          <NuxtLink to="/" class="site-logo shrink-0" @click.prevent="scrollToSection('hero')">
+            <span class="site-logo-brand">Reneo</span>
+            <span class="site-logo-suffix">.id</span>
+          </NuxtLink>
+
+          <!-- Mobile burger -->
+          <button
+            class="site-menu-toggle lg:hidden"
+            aria-label="Menu"
+            @click="mobileMenuOpen = !mobileMenuOpen"
+          >
+            <svg v-if="!mobileMenuOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+            <svg v-else class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
 
         <!-- Desktop Nav -->
-        <nav class="hidden lg:flex items-center gap-1">
+        <nav class="site-nav hidden lg:flex items-center justify-center">
           <button
             v-for="item in navItems"
             :key="item.sectionId"
@@ -131,27 +169,13 @@ function isActive(item: NavItem): boolean {
             {{ item.label }}
           </button>
         </nav>
-
-        <!-- Mobile burger -->
-        <button
-          class="lg:hidden p-2 -mr-2 text-gray-700 hover:text-gray-900 transition-colors"
-          aria-label="Menu"
-          @click="mobileMenuOpen = !mobileMenuOpen"
-        >
-          <svg v-if="!mobileMenuOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-          </svg>
-          <svg v-else class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
       </div>
 
       <!-- Mobile Menu -->
       <Transition name="mobile-menu">
         <div
           v-if="mobileMenuOpen"
-          class="lg:hidden bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-lg"
+          class="site-mobile-menu lg:hidden"
         >
           <nav class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex flex-col gap-1">
             <button
@@ -168,10 +192,7 @@ function isActive(item: NavItem): boolean {
       </Transition>
     </header>
 
-    <!-- Spacer for fixed header -->
-    <div class="h-16"></div>
-
-    <UMain>
+    <UMain class="site-main">
       <div
         class="page-content"
         :class="{ loading: isLoading }"
@@ -186,7 +207,7 @@ function isActive(item: NavItem): boolean {
           <p class="text-sm text-muted">
             © {{ new Date().getFullYear() }} Reneo.id - Wedding Organizer
           </p>
-          <p class="text-[10px] text-gray-300 mt-0.5">Nymbx Dev.</p>
+          <p class="text-[10px] text-gray-300 mt-0.5">NYMBX.dev</p>
         </div>
       </template>
 

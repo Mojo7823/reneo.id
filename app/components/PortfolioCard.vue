@@ -22,9 +22,13 @@ import type { CustomerGallery } from '~/data/portfolioConfig'
 interface Props {
   /** Gallery data to display */
   gallery: CustomerGallery
+  /** Compact variant used on homepage dense layout */
+  compact?: boolean
 }
 
-const props = defineProps<Props>()
+const props = withDefaults(defineProps<Props>(), {
+  compact: false,
+})
 
 const emit = defineEmits<{
   /** Emitted when an image is clicked for lightbox trigger */
@@ -44,18 +48,20 @@ function handleImageClick(image: string) {
 
 <template>
   <div
-    class="portfolio-card bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300"
+    class="portfolio-card transition-all duration-300"
+    :class="props.compact ? 'portfolio-card--compact' : 'portfolio-card--default'"
     :data-gallery-id="gallery.id"
     @mouseenter="isHovered = true"
     @mouseleave="isHovered = false"
   >
-    <div class="relative overflow-hidden">
+    <div class="portfolio-media relative overflow-hidden">
       <!-- Single image display when gallery has only one image -->
       <template v-if="gallery.imageCount === 1">
         <img
           :src="gallery.images[0]"
           :alt="`Portfolio image`"
-          class="w-full h-64 object-cover cursor-pointer transition-transform duration-500 hover:scale-105"
+          class="portfolio-image w-full object-cover cursor-pointer transition-transform duration-500"
+          :class="props.compact ? 'h-56 sm:h-60 hover:scale-[1.02]' : 'h-64 hover:scale-105'"
           @click="handleImageClick(gallery.images[0]!)"
         />
       </template>
@@ -76,7 +82,8 @@ function handleImageClick(image: string) {
             <img
               :src="image"
               :alt="`Portfolio image ${index + 1}`"
-              class="w-full h-64 object-cover cursor-pointer"
+              class="portfolio-image w-full object-cover cursor-pointer"
+              :class="props.compact ? 'h-56 sm:h-60' : 'h-64'"
               @click="handleImageClick(image)"
             />
           </template>
@@ -85,7 +92,10 @@ function handleImageClick(image: string) {
       
       <!-- Image count badge -->
       <div class="absolute top-3 right-3 z-20">
-        <span class="bg-black/60 text-white text-xs font-medium px-2 py-1 rounded-full">
+        <span
+          class="text-white text-xs font-medium px-2 py-1 rounded-full"
+          :class="props.compact ? 'bg-black/55' : 'bg-black/60'"
+        >
           {{ gallery.imageCount }} foto
         </span>
       </div>
@@ -94,6 +104,29 @@ function handleImageClick(image: string) {
 </template>
 
 <style scoped>
+.portfolio-card--default {
+  background: #fff;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  box-shadow: 0 10px 26px rgba(15, 23, 42, 0.11);
+}
+
+.portfolio-card--default:hover {
+  box-shadow: 0 16px 36px rgba(15, 23, 42, 0.16);
+}
+
+.portfolio-card--compact {
+  background: transparent;
+  border-radius: 0.375rem;
+  box-shadow: none;
+}
+
+.portfolio-card--compact .portfolio-media {
+  border: 1px solid #d4d4d8;
+  border-radius: 0.375rem;
+  background: #fff;
+}
+
 /* Carousel viewport and container */
 .portfolio-card :deep(.embla__viewport),
 .portfolio-card :deep([data-slot="viewport"]) {
@@ -138,6 +171,10 @@ function handleImageClick(image: string) {
   opacity: 1;
 }
 
+.portfolio-card--compact .portfolio-carousel :deep([data-slot="arrows"]) {
+  padding: 0 0.35rem;
+}
+
 /* Style individual arrow buttons - override Nuxt UI positioning */
 .portfolio-carousel :deep([data-slot="arrows"] button) {
   pointer-events: auto;
@@ -158,6 +195,12 @@ function handleImageClick(image: string) {
 
 .portfolio-carousel :deep([data-slot="arrows"] button:disabled) {
   opacity: 0.4;
+}
+
+.portfolio-card--compact .portfolio-carousel :deep([data-slot="arrows"] button) {
+  width: 2rem !important;
+  height: 2rem !important;
+  box-shadow: 0 2px 8px rgba(17, 24, 39, 0.16) !important;
 }
 
 /* Dots container - positioned at bottom of image */

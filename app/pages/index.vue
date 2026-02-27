@@ -7,7 +7,7 @@ definePageMeta({
 
 // Portfolio composable for preview galleries
 const { getPreviewGalleries } = usePortfolio()
-const previewGalleries = getPreviewGalleries(6)
+const previewGalleries = getPreviewGalleries(12)
 
 // Lightbox state for portfolio
 const lightboxOpen = ref(false)
@@ -38,53 +38,171 @@ function handleLightboxNavigate(direction: 'prev' | 'next') {
   }
 }
 
-// Carousel for About section - using real portfolio images
-const carouselSlides = [
-  {
-    image: '/portfolio/customer_1/2026-01-04_07-04-19_UTC_1.jpg',
-    title: 'Sejak 2023 di Surabaya',
-    description: 'Membantu pasangan menciptakan pernikahan bermakna dan tak terlupakan'
-  },
-  {
-    image: '/portfolio/customer_10/2025-07-13_12-50-51_UTC_2.jpg',
-    title: 'Tradisi & Kreativitas',
-    description: 'Memadukan nilai-nilai tradisional dengan inovasi modern untuk momen pernikahan yang unik'
-  },
-  {
-    image: '/portfolio/customer_15/2025-06-22_08-05-41_UTC_1.jpg',
-    title: 'Tim Profesional',
-    description: 'Dari tim kecil penuh semangat menjadi tim profesional yang berdedikasi untuk Anda'
-  },
-  {
-    image: '/portfolio/customer_5/2025-12-04_03-54-58_UTC_3.jpg',
-    title: 'Re + Neo',
-    description: 'Nilai fundamental yang teruji bertemu dengan inovasi yang terus berkembang'
-  },
-]
-
-const currentSlide = ref(0)
-let slideInterval: ReturnType<typeof setInterval> | null = null
-
-const nextSlide = () => {
-  currentSlide.value = (currentSlide.value + 1) % carouselSlides.length
+interface CarouselItem {
+  src: string
+  ratio: number
+  naturalWidth: number
+  naturalHeight: number
 }
 
-const prevSlide = () => {
-  currentSlide.value = (currentSlide.value - 1 + carouselSlides.length) % carouselSlides.length
+const aboutCarouselViewportRef = ref<HTMLElement | null>(null)
+const aboutCarouselSegmentRefs = ref<Array<HTMLElement | null>>([null, null, null])
+
+const sectionProgress = ref(0)
+const scrollOffsetPx = ref(0)
+const dragOffsetPx = ref(0)
+const isDragging = ref(false)
+const pointerStartX = ref(0)
+const pointerStartDragOffset = ref(0)
+const activePointerId = ref<number | null>(null)
+const cycleWidthPx = ref(1)
+const isMobileCarousel = ref(false)
+const carouselScrollSensitivity = 2.4
+
+const aboutCarouselImageSources = Array.from({ length: 9 }, (_, index) => `/karusel_1/${index + 1}.jpg`)
+const fallbackAboutCarouselItems: CarouselItem[] = aboutCarouselImageSources.map((src) => ({
+  src,
+  naturalWidth: 1080,
+  naturalHeight: 1350,
+  ratio: 1080 / 1350
+}))
+
+const aboutCarouselItems = ref<CarouselItem[]>(fallbackAboutCarouselItems)
+
+const normalizeOffset = (value: number, cycle: number) => ((value % cycle) + cycle) % cycle
+
+const normalizedOffsetPx = computed(() => {
+  const cycle = cycleWidthPx.value || 1
+  return normalizeOffset(scrollOffsetPx.value + dragOffsetPx.value, cycle)
+})
+
+const trackTranslatePx = computed(() => {
+  const cycle = cycleWidthPx.value || 1
+  return -(cycle + normalizedOffsetPx.value)
+})
+
+const setAboutCarouselSegmentRef = (element: Element | null, index: number) => {
+  aboutCarouselSegmentRefs.value[index] = element as HTMLElement | null
 }
 
-const goToSlide = (index: number) => {
-  currentSlide.value = index
+const getAboutCardStyle = (item: CarouselItem) => {
+  if (isMobileCarousel.value) {
+    return { width: '66vw' }
+  }
+
+  return {
+    width: `calc(var(--about-carousel-card-height) * ${item.ratio.toFixed(5)})`
+  }
 }
 
-const startAutoSlide = () => {
-  slideInterval = setInterval(nextSlide, 5000)
+const updateCarouselViewportMode = () => {
+  isMobileCarousel.value = window.innerWidth < 768
 }
 
-const stopAutoSlide = () => {
-  if (slideInterval) {
-    clearInterval(slideInterval)
-    slideInterval = null
+const measureAboutCarouselCycleWidth = () => {
+  const firstSegment = aboutCarouselSegmentRefs.value[0]
+  const secondSegment = aboutCarouselSegmentRefs.value[1]
+
+  if (!firstSegment || !secondSegment) return
+
+  const measuredWidth = secondSegment.offsetLeft - firstSegment.offsetLeft
+  if (measuredWidth > 0) {
+    cycleWidthPx.value = measuredWidth
+  }
+}
+
+const updateAboutCarouselScrollProgress = () => {
+  const totalScrollableDistance = document.documentElement.scrollHeight - window.innerHeight
+  if (totalScrollableDistance <= 0) {
+    sectionProgress.value = 0
+    scrollOffsetPx.value = 0
+    return
+  }
+
+  const pageScrollTop = window.scrollY || window.pageYOffset
+  const globalProgress = pageScrollTop / totalScrollableDistance
+  const clampedGlobalProgress = Math.min(Math.max(globalProgress, 0), 1)
+
+  sectionProgress.value = clampedGlobalProgress
+  scrollOffsetPx.value = clampedGlobalProgress * cycleWidthPx.value * carouselScrollSensitivity
+}
+
+const updateAboutCarouselLayout = () => {
+  updateCarouselViewportMode()
+  measureAboutCarouselCycleWidth()
+  updateAboutCarouselScrollProgress()
+}
+
+const loadAboutCarouselItems = async () => {
+  const loadedItems = await Promise.all(
+    aboutCarouselImageSources.map((src) => new Promise<CarouselItem>((resolve) => {
+      const image = new Image()
+
+      image.onload = () => {
+        const naturalWidth = image.naturalWidth || 1080
+        const naturalHeight = image.naturalHeight || 1350
+        resolve({
+          src,
+          naturalWidth,
+          naturalHeight,
+          ratio: naturalWidth / naturalHeight
+        })
+      }
+
+      image.onerror = () => {
+        resolve({
+          src,
+          naturalWidth: 1080,
+          naturalHeight: 1350,
+          ratio: 1080 / 1350
+        })
+      }
+
+      image.src = src
+    }))
+  )
+
+  aboutCarouselItems.value = loadedItems
+}
+
+const releasePointerCaptureSafely = (pointerId: number) => {
+  const viewport = aboutCarouselViewportRef.value
+  if (!viewport) return
+
+  if (viewport.hasPointerCapture(pointerId)) {
+    viewport.releasePointerCapture(pointerId)
+  }
+}
+
+const onAboutCarouselPointerDown = (event: PointerEvent) => {
+  if (event.pointerType === 'mouse' && event.button !== 0) return
+  if (activePointerId.value !== null) return
+
+  activePointerId.value = event.pointerId
+  pointerStartX.value = event.clientX
+  pointerStartDragOffset.value = dragOffsetPx.value
+  isDragging.value = true
+
+  aboutCarouselViewportRef.value?.setPointerCapture(event.pointerId)
+}
+
+const onAboutCarouselPointerMove = (event: PointerEvent) => {
+  if (!isDragging.value) return
+  if (activePointerId.value !== event.pointerId) return
+
+  const deltaX = pointerStartX.value - event.clientX
+  dragOffsetPx.value = pointerStartDragOffset.value + deltaX
+}
+
+const stopAboutCarouselDragging = (event?: PointerEvent) => {
+  if (event && activePointerId.value !== null && event.pointerId !== activePointerId.value) return
+
+  const pointerId = activePointerId.value
+  isDragging.value = false
+  activePointerId.value = null
+
+  if (pointerId !== null) {
+    releasePointerCaptureSafely(pointerId)
   }
 }
 
@@ -92,7 +210,10 @@ const stopAutoSlide = () => {
 const scrollToAbout = () => {
   const aboutSection = document.getElementById('about')
   if (aboutSection) {
-    aboutSection.scrollIntoView({ behavior: 'smooth' })
+    const headerElement = document.querySelector('.site-header') as HTMLElement | null
+    const headerOffset = headerElement?.offsetHeight ?? 0
+    const top = aboutSection.getBoundingClientRect().top + window.scrollY - headerOffset
+    window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' })
   }
 }
 
@@ -116,14 +237,22 @@ const observeElements = () => {
   animatedElements.forEach((el) => observer.observe(el))
 }
 
-onMounted(() => {
-  startAutoSlide()
+onMounted(async () => {
+  await loadAboutCarouselItems()
+  await nextTick()
+  updateAboutCarouselLayout()
+
   observeElements()
   fetchReviews()
+
+  window.addEventListener('scroll', updateAboutCarouselScrollProgress, { passive: true })
+  window.addEventListener('resize', updateAboutCarouselLayout, { passive: true })
 })
 
 onUnmounted(() => {
-  stopAutoSlide()
+  window.removeEventListener('scroll', updateAboutCarouselScrollProgress)
+  window.removeEventListener('resize', updateAboutCarouselLayout)
+  stopAboutCarouselDragging()
 })
 
 
@@ -242,6 +371,7 @@ const getStars = (rating: number) => {
 const packages = [
   {
     name: 'Prajurit Package',
+    image: '/paket/prajurit.jpg',
     guestRange: '100-300 Tamu',
     features: [
       'Konsultasi Wedding Unlimited',
@@ -255,6 +385,7 @@ const packages = [
   },
   {
     name: 'Abdi Dalem Package',
+    image: '/paket/abdidalem.jpg',
     guestRange: '400-800 Tamu',
     features: [
       'Konsultasi Wedding Unlimited',
@@ -269,6 +400,7 @@ const packages = [
   },
   {
     name: 'Sultan Package',
+    image: '/paket/sultan.jpg',
     guestRange: '800-1200 Tamu',
     features: [
       'Konsultasi Wedding Unlimited',
@@ -289,34 +421,33 @@ const packages = [
 <template>
   <div>
     <!-- Hero Section -->
-    <section id="hero" class="relative min-h-screen flex items-center justify-center overflow-hidden">
-      <!-- Background Image -->
+    <section id="hero" class="relative min-h-[72vh] md:min-h-[74vh] flex items-center overflow-hidden">
+      <!-- Background Video -->
       <div class="absolute inset-0 z-0">
-        <img
-          src="https://images.pexels.com/photos/1024993/pexels-photo-1024993.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop"
-          alt="Latar Belakang Pernikahan"
+        <video
           class="w-full h-full object-cover"
-        />
-        <div class="absolute inset-0 bg-black/40"></div>
+          autoplay
+          muted
+          loop
+          playsinline
+          preload="metadata"
+        >
+          <source src="/video_cover/cover.mp4" type="video/mp4" />
+        </video>
+        <div class="absolute inset-0 bg-black/45"></div>
       </div>
-      
+
       <!-- Hero Content -->
-      <div class="relative z-10 text-center text-white px-4 max-w-4xl mx-auto">
-        <p class="text-lg md:text-xl mb-4 tracking-widest uppercase">Selamat Datang di</p>
-        <h1 class="text-5xl md:text-7xl font-serif font-bold mb-6">Reneo.id</h1>
-        <p class="text-xl md:text-2xl mb-4 font-light">Wedding Organizer</p>
-        <p class="text-lg md:text-xl mb-8 max-w-2xl mx-auto opacity-90">
-          Menciptakan momen ajaib dan perayaan tak terlupakan. Biarkan kami mewujudkan impian pernikahan Anda menjadi kenyataan indah.
-        </p>
-        <div class="flex flex-col sm:flex-row gap-4 justify-center">
-          <UButton href="#portfolio" size="xl" color="neutral" variant="solid">
-            Lihat Portofolio Kami
-          </UButton>
-          <UButton href="#location" size="xl" variant="outline" color="neutral">
-            Hubungi Kami
-          </UButton>
+      <UContainer class="relative z-10 w-full">
+        <div class="hero-copy text-white max-w-2xl">
+          <p class="hero-kicker">Selamat Datang di</p>
+          <h1 class="hero-title">RENEO.ID</h1>
+          <p class="hero-subtitle">Wedding Organizer</p>
+          <p class="hero-description">
+            Menciptakan momen dan perayaan tak terlupakan. Biarkan kami mewujudkan impian pernikahan Anda menjadi kenyataan.
+          </p>
         </div>
-      </div>
+      </UContainer>
       
       <!-- Scroll Indicator - Clickable -->
       <button 
@@ -329,101 +460,86 @@ const packages = [
     </section>
 
     <!-- About Section -->
-    <section id="about" class="py-20 bg-white">
-      <UContainer>
-        <div class="grid lg:grid-cols-2 gap-12 items-center">
-          <div class="scroll-animate-left">
-            <p class="text-primary font-medium mb-2 uppercase tracking-wide">Tentang Kami</p>
-            <h2 class="text-4xl md:text-5xl font-serif font-bold mb-6 text-gray-900">
-              Kisah Anda, Diceritakan dengan Indah
-            </h2>
-            <p class="text-lg text-gray-600 mb-6">
-                            Reneo.id didirikan pada tahun 2023 di Surabaya dengan visi membantu pasangan menciptakan pernikahan yang bermakna dan tak terlupakan. Nama "Reneo" memiliki filosofi mendalam: "Re" melambangkan nilai-nilai fundamental yang telah teruji, sementara "Neo" merepresentasikan inovasi yang terus berkembang. Kami berkomitmen untuk menciptakan momen pernikahan yang unik dan berkesan bagi setiap pasangan yang kami tangani.
+    <section id="about" class="about-editorial section-tone section-tone-about">
+      <div class="about-carousel-section">
+        <div class="about-carousel-sticky">
+          <UContainer class="about-editorial-copy-wrap">
+            <div class="about-editorial-copy scroll-animate">
+              <p class="about-editorial-jargon">
+                <span class="about-editorial-line about-editorial-line-primary">
+                  Reneo Planner mewujudkan hari sempurna Anda dengan nyata —
+                </span>
+                <span class="about-editorial-line about-editorial-line-secondary">
+                  Nilai klasik, awal yang baru. Bersama, kita ubah visi Anda menjadi kenyataan.
+                </span>
+              </p>
+            </div>
+          </UContainer>
 
-            </p>
-            <div class="flex gap-4">
-              <UButton href="#portfolio" color="primary" size="lg">
-                Lihat Portofolio
-              </UButton>
-            </div>
-          </div>
-          
-          <!-- Carousel -->
-          <div 
-            class="scroll-animate-right carousel-container"
-            @mouseenter="stopAutoSlide"
-            @mouseleave="startAutoSlide"
+          <div
+            ref="aboutCarouselViewportRef"
+            class="about-carousel-viewport"
+            :class="{ 'is-dragging': isDragging }"
+            @pointerdown="onAboutCarouselPointerDown"
+            @pointermove="onAboutCarouselPointerMove"
+            @pointerup="stopAboutCarouselDragging"
+            @pointercancel="stopAboutCarouselDragging"
+            @lostpointercapture="stopAboutCarouselDragging"
+            @dragstart.prevent
           >
-            <div 
-              class="carousel-track"
-              :style="{ transform: `translateX(-${currentSlide * 100}%)` }"
-            >
-              <div 
-                v-for="(slide, index) in carouselSlides" 
-                :key="index"
-                class="carousel-slide"
+            <div class="about-carousel-track" :style="{ transform: `translate3d(${trackTranslatePx}px, 0, 0)` }">
+              <div
+                v-for="segmentIndex in 3"
+                :key="`about-segment-${segmentIndex}`"
+                :ref="(element) => setAboutCarouselSegmentRef(element as Element | null, segmentIndex - 1)"
+                class="about-carousel-segment"
               >
-                <img
-                  :src="slide.image"
-                  :alt="slide.title"
-                  class="carousel-image"
-                />
-                <div class="carousel-overlay">
-                  <div class="carousel-caption">
-                    <h3>{{ slide.title }}</h3>
-                    <p>{{ slide.description }}</p>
-                  </div>
-                </div>
+                <article
+                  v-for="(item, imageIndex) in aboutCarouselItems"
+                  :key="`about-card-${segmentIndex}-${item.src}`"
+                  class="about-carousel-card"
+                  :style="getAboutCardStyle(item)"
+                >
+                  <img
+                    :src="item.src"
+                    :alt="`Galeri Reneo ${imageIndex + 1}`"
+                    class="about-carousel-image"
+                    loading="lazy"
+                    decoding="async"
+                    draggable="false"
+                  />
+                </article>
               </div>
-            </div>
-            
-            <!-- Navigation Arrows -->
-            <button class="carousel-nav prev" @click="prevSlide" aria-label="Slide sebelumnya">
-              <UIcon name="i-heroicons-chevron-left" class="w-6 h-6 text-gray-700" />
-            </button>
-            <button class="carousel-nav next" @click="nextSlide" aria-label="Slide selanjutnya">
-              <UIcon name="i-heroicons-chevron-right" class="w-6 h-6 text-gray-700" />
-            </button>
-            
-            <!-- Dots -->
-            <div class="carousel-dots">
-              <button
-                v-for="(slide, index) in carouselSlides"
-                :key="index"
-                class="carousel-dot"
-                :class="{ active: currentSlide === index }"
-                @click="goToSlide(index)"
-                :aria-label="`Go to slide ${index + 1}`"
-              ></button>
             </div>
           </div>
         </div>
-      </UContainer>
+      </div>
     </section>
 
 
     <!-- Portfolio Section -->
-    <section id="portfolio" class="py-20 bg-white">
+    <section id="portfolio" class="py-20 section-tone section-tone-portfolio">
       <UContainer>
-        <div class="text-center mb-16 scroll-animate">
-          <p class="text-primary font-medium mb-2 uppercase tracking-wide">Karya Kami</p>
-          <h2 class="text-4xl md:text-5xl font-serif font-bold mb-4 text-gray-900">Portofolio Pernikahan</h2>
-          <p class="text-xl text-gray-600 max-w-2xl mx-auto">
-            Jelajahi beberapa pernikahan terindah kami dan dapatkan inspirasi untuk hari spesial Anda
-          </p>
+        <div class="text-center mb-10 scroll-animate">
+          <p class="section-script-kicker">Portofolio Kami</p>
         </div>
+      </UContainer>
 
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="portfolio-wide-wrap">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 lg:gap-5">
           <PortfolioCard
             v-for="(gallery, index) in previewGalleries"
             :key="gallery.id"
             :gallery="gallery"
+            compact
             class="scroll-animate-scale"
-            :class="`delay-${((index % 3) + 1) * 100}`"
+            :class="`delay-${((index % 4) + 1) * 100}`"
             @image-click="handleImageClick"
           />
         </div>
+      </div>
 
+      <UContainer>
         <div class="text-center mt-12 scroll-animate">
           <UButton to="/portfolio" color="primary" size="lg">
             Lihat Portofolio Lengkap
@@ -441,16 +557,10 @@ const packages = [
     </section>
 
     <!-- Instagram Section -->
-    <section id="instagram" class="py-20 bg-gray-50">
+    <section id="instagram" class="py-20 section-tone section-tone-instagram">
       <UContainer>
         <div class="text-center mb-12 scroll-animate">
-          <p class="text-primary font-medium mb-2 uppercase tracking-wide">Ikuti Kami</p>
-          <h2 class="text-4xl md:text-5xl font-serif font-bold mb-4 text-gray-900">
-            Instagram Kami
-          </h2>
-          <p class="text-xl text-gray-600 max-w-2xl mx-auto mb-6">
-            Ikuti perjalanan kami dan lihat momen-momen indah dari pernikahan yang telah kami tangani
-          </p>
+          <p class="section-script-kicker">Ikuti Kami</p>
           <UButton
             href="https://www.instagram.com/reneo.planner/"
             target="_blank"
@@ -497,13 +607,10 @@ const packages = [
     </section>
 
     <!-- Packages Section -->
-    <section id="packages" class="py-20 bg-white">
+    <section id="packages" class="py-20 section-tone section-tone-packages">
       <UContainer>
         <div class="text-center mb-16 scroll-animate">
-          <p class="text-primary font-medium mb-2 uppercase tracking-wide">Paket Kami</p>
-          <h2 class="text-4xl md:text-5xl font-serif font-bold mb-4 text-gray-900">
-            Paket Layanan Kami
-          </h2>
+          <p class="section-script-kicker">Paket Kami</p>
           <p class="text-xl text-gray-600 max-w-2xl mx-auto">
             Pilih paket yang sesuai dengan kebutuhan pernikahan Anda
           </p>
@@ -513,38 +620,49 @@ const packages = [
           <UCard
             v-for="(pkg, index) in packages"
             :key="pkg.name"
-            class="hover:shadow-lg transition-shadow duration-300 scroll-animate"
+            class="h-full overflow-hidden bg-transparent ring-0 shadow-lg hover:shadow-xl transition-shadow duration-300 scroll-animate"
             :class="`delay-${(index + 1) * 100}`"
+            :ui="{ body: 'h-full p-0 sm:p-0' }"
           >
-            <div class="p-6">
-              <div class="text-center mb-6">
-                <h3 class="text-2xl font-serif font-bold text-gray-900 mb-2">{{ pkg.name }}</h3>
-                <p class="text-primary font-medium text-lg">{{ pkg.guestRange }}</p>
-              </div>
-              
-              <ul class="space-y-3 mb-6">
-                <li
-                  v-for="feature in pkg.features"
-                  :key="feature"
-                  class="flex items-start"
-                >
-                  <UIcon name="i-heroicons-check-circle" class="w-5 h-5 text-primary mt-0.5 mr-3 flex-shrink-0" />
-                  <span class="text-gray-600">{{ feature }}</span>
-                </li>
-              </ul>
-              
-              <div class="border-t pt-4">
-                <p class="text-sm font-medium text-gray-900 mb-2">Gratis:</p>
-                <ul class="space-y-2">
+            <div class="relative flex h-full min-h-[34rem] flex-col">
+              <img
+                :src="pkg.image"
+                :alt="`Ilustrasi ${pkg.name}`"
+                class="absolute inset-0 h-full w-full object-cover object-center blur-[1px] scale-[1.03]"
+                loading="lazy"
+                decoding="async"
+              />
+              <div class="absolute inset-0 bg-black/55"></div>
+              <div class="relative z-10 flex h-full flex-col p-6">
+                <div class="text-center mb-6">
+                  <h3 class="text-2xl font-serif font-bold text-white mb-2">{{ pkg.name }}</h3>
+                  <p class="font-medium text-lg text-white/95">{{ pkg.guestRange }}</p>
+                </div>
+
+                <ul class="space-y-3 mb-6">
                   <li
-                    v-for="freeItem in pkg.freeItems"
-                    :key="freeItem"
-                    class="flex items-center"
+                    v-for="feature in pkg.features"
+                    :key="feature"
+                    class="flex items-start"
                   >
-                    <UIcon name="i-heroicons-gift" class="w-4 h-4 text-primary mr-2 flex-shrink-0" />
-                    <span class="text-sm text-gray-600">{{ freeItem }}</span>
+                    <UIcon name="i-heroicons-check-circle" class="w-5 h-5 text-white mt-0.5 mr-3 flex-shrink-0" />
+                    <span class="text-white/90">{{ feature }}</span>
                   </li>
                 </ul>
+
+                <div class="mt-auto border-t border-white/35 pt-4">
+                  <p class="text-sm font-medium text-white mb-2">Gratis:</p>
+                  <ul class="space-y-2">
+                    <li
+                      v-for="freeItem in pkg.freeItems"
+                      :key="freeItem"
+                      class="flex items-center"
+                    >
+                      <UIcon name="i-heroicons-gift" class="w-4 h-4 text-white mr-2 flex-shrink-0" />
+                      <span class="text-sm text-white/85">{{ freeItem }}</span>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
           </UCard>
@@ -559,16 +677,10 @@ const packages = [
     </section>
 
     <!-- Maps & Reviews Section -->
-    <section id="location" class="py-20 bg-white">
+    <section id="location" class="py-20 section-tone section-tone-location">
       <UContainer>
         <div class="text-center mb-16 scroll-animate">
-          <p class="text-primary font-medium mb-2 uppercase tracking-wide">Temukan Kami</p>
-          <h2 class="text-4xl md:text-5xl font-serif font-bold mb-4 text-gray-900">
-            Lokasi & Ulasan Kami
-          </h2>
-          <p class="text-xl text-gray-600 max-w-2xl mx-auto">
-            Kunjungi kantor kami atau lihat ulasan dari pasangan yang telah kami bantu
-          </p>
+          <p class="section-script-kicker">Temukan Kami</p>
         </div>
 
         <!-- Overall Rating Summary -->
@@ -757,13 +869,10 @@ const packages = [
     </section>
 
     <!-- Contact / Hubungi Kami Section -->
-    <section id="contact" class="py-20 bg-gray-50">
+    <section id="contact" class="py-20 section-tone section-tone-contact">
       <UContainer>
         <div class="text-center mb-16 scroll-animate">
-          <p class="text-primary font-medium mb-2 uppercase tracking-wide">Hubungi Kami</p>
-          <h2 class="text-4xl md:text-5xl font-serif font-bold mb-4 text-gray-900">
-            Siap Merencanakan Pernikahan Impian Anda?
-          </h2>
+          <p class="section-script-kicker">Hubungi Kami</p>
           <p class="text-xl text-gray-600 max-w-2xl mx-auto">
             Hubungi kami untuk konsultasi gratis dan mari mulai merencanakan hari sempurna Anda bersama.
           </p>
