@@ -338,13 +338,8 @@ const packages = [
               Kisah Anda, Diceritakan dengan Indah
             </h2>
             <p class="text-lg text-gray-600 mb-6">
-              Reneo.id didirikan pada tahun 2023 di Surabaya dengan visi membantu pasangan menciptakan pernikahan yang bermakna dan tak terlupakan. Berawal dari tim kecil yang penuh semangat, kami telah berkembang menjadi tim profesional yang berdedikasi untuk mewujudkan pernikahan impian setiap pasangan.
-            </p>
-            <p class="text-lg text-gray-600 mb-4">
-              Nama "Reneo" memiliki filosofi mendalam: "Re" melambangkan nilai-nilai fundamental yang telah teruji, sementara "Neo" merepresentasikan inovasi yang terus berkembang. Kami percaya bahwa pernikahan yang sempurna adalah perpaduan antara tradisi yang bermakna dan kreativitas yang segar.
-            </p>
-            <p class="text-lg text-gray-600 mb-8">
-              Dengan menggabungkan tradisi dan kreativitas, kami berkomitmen untuk menciptakan momen pernikahan yang unik dan berkesan bagi setiap pasangan yang kami tangani.
+                            Reneo.id didirikan pada tahun 2023 di Surabaya dengan visi membantu pasangan menciptakan pernikahan yang bermakna dan tak terlupakan. Nama "Reneo" memiliki filosofi mendalam: "Re" melambangkan nilai-nilai fundamental yang telah teruji, sementara "Neo" merepresentasikan inovasi yang terus berkembang. Kami berkomitmen untuk menciptakan momen pernikahan yang unik dan berkesan bagi setiap pasangan yang kami tangani.
+
             </p>
             <div class="flex gap-4">
               <UButton href="#portfolio" color="primary" size="lg">
