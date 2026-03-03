@@ -39,7 +39,9 @@ export default defineNuxtConfig({
         { name: 'description', content: 'Professional wedding organizer and photography services. Creating magical moments and unforgettable celebrations.' },
       ],
       link: [
-        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+        { rel: 'icon', type: 'image/png', href: '/favicon.png' },
+        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+        { rel: 'apple-touch-icon', sizes: '180x180', href: '/favicon.png' },
       ]
     }
   },
