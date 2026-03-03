@@ -14,7 +14,7 @@
 import type { CustomerGallery } from '~/data/portfolioConfig'
 
 definePageMeta({
-  title: 'Portofolio - Reneo.id',
+  title: 'Portofolio - Reneoplanner.id',
 })
 
 // Get all galleries from the composable

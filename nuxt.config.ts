@@ -32,7 +32,7 @@ export default defineNuxtConfig({
   // App metadata for wedding/photography project
   app: {
     head: {
-      title: 'Reneo.id - Wedding Organizer',
+      title: 'Reneo - Wedding Planner',
       meta: [
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },

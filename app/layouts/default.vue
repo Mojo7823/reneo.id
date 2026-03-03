@@ -139,7 +139,7 @@ function isActive(item: NavItem): boolean {
         <div class="site-header-top">
           <NuxtLink to="/" class="site-logo shrink-0" @click.prevent="scrollToSection('hero')">
             <span class="site-logo-brand">Reneo</span>
-            <span class="site-logo-suffix">.id</span>
+            <span class="site-logo-suffix">Planner</span>
           </NuxtLink>
 
           <!-- Mobile burger -->
@@ -205,9 +205,9 @@ function isActive(item: NavItem): boolean {
       <template #left>
         <div>
           <p class="text-sm text-muted">
-            © {{ new Date().getFullYear() }} Reneo.id - Wedding Organizer
+            © {{ new Date().getFullYear() }} Reneoplanner.id - Wedding Planner
           </p>
-          <p class="text-[10px] text-gray-300 mt-0.5">NYMBX.dev</p>
+          <a href="https://nymbx.dev" target="_blank" rel="noopener noreferrer" class="text-[10px] text-gray-300 mt-0.5 hover:text-gray-200 transition-colors">NYMBX.dev</a>
         </div>
       </template>
 

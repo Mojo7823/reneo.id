@@ -2,7 +2,7 @@
 import type { CustomerGallery } from '~/data/portfolioConfig'
 
 definePageMeta({
-  title: 'Home - Reneo.id Wedding Organizer',
+  title: 'Reneo Wedding Planner',
 })
 
 // Portfolio composable for preview galleries
@@ -262,7 +262,7 @@ onUnmounted(() => {
 const mapsConfig = {
   embedUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3957.6!2d112.75!3d-7.29!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zN8KwMTcnMjQuMCJTIDExMsKwNDUnMDAuMCJF!5e0!3m2!1sen!2sid!4v1234567890',
   placeUrl: 'https://maps.app.goo.gl/YgQcDsoE1JfFFR9p7',
-  placeName: 'Reneo.id Wedding Organizer',
+  placeName: 'Reneo Planner Wedding Organizer',
 }
 
 const mapsLoaded = ref(true)
@@ -439,12 +439,12 @@ const packages = [
 
       <!-- Hero Content -->
       <UContainer class="relative z-10 w-full">
-        <div class="hero-copy text-white max-w-2xl">
-          <p class="hero-kicker">Selamat Datang di</p>
-          <h1 class="hero-title">RENEO.ID</h1>
-          <p class="hero-subtitle">Wedding Organizer</p>
-          <p class="hero-description">
-            Menciptakan momen dan perayaan tak terlupakan. Biarkan kami mewujudkan impian pernikahan Anda menjadi kenyataan.
+        <div class="hero-copy text-white max-w-xl">
+          <p class="hero-kicker text-sm">Selamat Datang di</p>
+          <h1 class="hero-title text-4xl md:text-5xl">RENEO</h1>
+          <p class="hero-subtitle text-lg md:text-xl">Wedding Planner</p>
+          <p class="hero-description font-light text-sm md:text-base opacity-90">
+        Menciptakan momen dan perayaan tak terlupakan. Biarkan kami mewujudkan impian pernikahan Anda menjadi kenyataan.
           </p>
         </div>
       </UContainer>
@@ -797,7 +797,7 @@ const packages = [
                 loading="lazy"
                 referrerpolicy="no-referrer-when-downgrade"
                 @error="handleMapsError"
-                title="Lokasi Reneo.id Wedding Organizer"
+                title="Lokasi Reneo Wedding Planner"
               ></iframe>
             </div>
             <!-- Fallback if maps fails to load -->
