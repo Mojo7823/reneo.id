@@ -431,7 +431,10 @@ const packages = [
           loop
           playsinline
           preload="metadata"
+          poster="/video_cover/cover-poster.jpg"
         >
+          <!-- Portrait phones get a center crop (what object-cover shows anyway) at ~half the size -->
+          <source src="/video_cover/cover-mobile.mp4" type="video/mp4" media="(max-aspect-ratio: 3/4)" />
           <source src="/video_cover/cover.mp4" type="video/mp4" />
         </video>
         <div class="absolute inset-0 bg-black/45"></div>
@@ -582,6 +585,7 @@ const packages = [
               src="https://www.instagram.com/reneo.planner/embed"
               class="w-full border-0"
               style="min-height: 600px;"
+              loading="lazy"
               scrolling="no"
               allowtransparency="true"
               title="Instagram Feed Reneo.planner"

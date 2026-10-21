@@ -62,6 +62,8 @@ function handleImageClick(image: string) {
           :alt="`Portfolio image`"
           class="portfolio-image w-full object-cover cursor-pointer transition-transform duration-500"
           :class="props.compact ? 'h-56 sm:h-60 hover:scale-[1.02]' : 'h-64 hover:scale-105'"
+          loading="lazy"
+          decoding="async"
           @click="handleImageClick(gallery.images[0]!)"
         />
       </template>
@@ -84,6 +86,8 @@ function handleImageClick(image: string) {
               :alt="`Portfolio image ${index + 1}`"
               class="portfolio-image w-full object-cover cursor-pointer"
               :class="props.compact ? 'h-56 sm:h-60' : 'h-64'"
+              loading="lazy"
+              decoding="async"
               @click="handleImageClick(image)"
             />
           </template>
