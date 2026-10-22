@@ -14,11 +14,9 @@
     "@fontsource/manrope": "^5.2.8",
     "@fontsource/prata": "^5.2.7",
     "@fontsource/work-sans": "^5.2.8",
-    "@nuxt/content": "^3.10.0",
     "@nuxt/fonts": "^0.12.1",
     "@nuxt/icon": "^2.2.0",
     "@nuxt/ui": "^4.3.0",
-    "better-sqlite3": "^12.6.0",
     "nuxt": "^4.2.2"
   }
 }
